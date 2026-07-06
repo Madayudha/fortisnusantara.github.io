@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florist Nusantara - Katalog & Admin</title>
+    <!-- Tailwind CSS untuk Desain Modern & Responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .active-tab { border-bottom: 2px solid #db2777; color: #db2777; font-weight: 600; }
+        .sidebar-active { bg-gray-100; color: #111827; font-weight: 600; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <!-- TOP NAVBAR -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-green-600 font-bold text-xl">🌿</span>
+                <h1 class="text-xl font-bold text-gray-900 tracking-tight">Florist Nusantara</h1>
+            </div>
+            <nav class="flex gap-2">
+                <button onclick="switchView('katalog')" id="btn-view-katalog" class="px-4 py-2 text-sm font-medium rounded-lg bg-pink-600 text-white shadow-sm transition">🛒 Halaman Katalog</button>
+                <button onclick="switchView('admin')" id="btn-view-admin" class="px-4 py-2 text-sm font-medium rounded-lg bg-gray-800 text-white shadow-sm transition">🔒 Super Admin</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- 1. HALAMAN KATALOG PUBLIK                  -->
+    <!-- ========================================== -->
+    <main id="view-katalog" class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Banner Rangkaian Bunga -->
+        <div class="bg-gradient-to-r from-emerald-800 to-teal-700 rounded-2xl p-8 text-center text-white mb-8 shadow-md">
+            <h2 class="text-3xl md:text-4xl font-bold mb-2">Rangkaian <span class="text-yellow-300">Bunga Spesial</span></h2>
+            <p class="text-emerald-100 text-sm md:text-base mb-6">Sampaikan perasaan tulus dengan bunga pilihan terbaik</p>
+            <div class="flex flex-wrap justify-center gap-2 text-xs md:text-sm">
+                <span class="bg-emerald-900/40 px-3 py-1.5 rounded-full border border-emerald-600">🌹 Ulang Tahun</span>
+                <span class="bg-emerald-900/40 px-3 py-1.5 rounded-full border border-emerald-600">💍 Pernikahan</span>
+                <span class="bg-emerald-900/40 px-3 py-1.5 rounded-full border border-emerald-600">🎓 Wisuda</span>
+                <span class="bg-emerald-900/40 px-3 py-1.5 rounded-full border border-emerald-600">❤️ Anniversary</span>
+                <span class="bg-emerald-900/40 px-3 py-1.5 rounded-full border border-emerald-600">🎉 Congratulations</span>
+                <span class="bg-emerald-900/40 px-3 py-1.5 rounded-full border border-emerald-600">🕊️ Ucapan Duka</span>
+            </div>
+        </div>
+
+        <!-- Filter Kategori Klien -->
+        <div class="border-b border-gray-200 mb-8 overflow-x-auto flex gap-6 text-sm text-gray-500 whitespace-nowrap">
+            <button onclick="filterKategori('Semua')" id="cat-Semua" class="pb-3 active-tab">Semua</button>
+            <button onclick="filterKategori('Ulang Tahun')" id="cat-Ulang Tahun" class="pb-3">🎂 Ulang Tahun</button>
+            <button onclick="filterKategori('Pernikahan')" id="cat-Pernikahan" class="pb-3">💍 Pernikahan</button>
+            <button onclick="filterKategori('Wisuda')" id="cat-Wisuda" class="pb-3">🎓 Wisuda</button>
+            <button onclick="filterKategori('Anniversary')" id="cat-Anniversary" class="pb-3">❤️ Anniversary</button>
+            <button onclick="filterKategori('Congratulations')" id="cat-Congratulations" class="pb-3">🎊 Congratulations</button>
+            <button onclick="filterKategori('Ucapan Duka')" id="cat-Ucapan Duka" class="pb-3">🕊️ Ucapan Duka</button>
+        </div>
+
+        <!-- Grid Katalog Produk -->
+        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span>Semua Produk</span>
+            <span id="product-count-badge" class="bg-gray-200 text-gray-700 text-xs px-2.5 py-0.5 rounded-full">9 tersedia</span>
+        </h3>
+        <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Produk akan dirender otomatis oleh JavaScript di sini -->
+        </div>
+    </main>
+
+    <!-- ========================================== -->
+    <!-- 2. HALAMAN DASBOR SUPER ADMIN             -->
+    <!-- ========================================== -->
+    <main id="view-admin" class="max-w-7xl mx-auto px-4 py-8 hidden">
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Sidebar Navigasi Admin -->
+            <aside class="w-full lg:w-64 flex flex-col gap-1.5 bg-white p-4 rounded-xl border border-gray-200 shadow-sm h-fit">
+                <div class="flex items-center gap-3 px-3 py-2 border-b border-gray-100 mb-3">
+                    <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold">SA</div>
+                    <div>
+                        <h4 class="text-sm font-bold text-gray-900">Super Admin</h4>
+                        <p class="text-xs text-gray-500">floristnusantara.com</p>
+                    </div>
+                </div>
+                <p class="text-xs font-bold uppercase text-gray-400 tracking-wider px-3 mt-2 mb-1">Utama</p>
+                <button onclick="switchAdminSubTab('dashboard')" id="sub-dash" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-pink-600 bg-pink-50 font-medium text-left">📊 Dashboard</button>
+                <button onclick="switchAdminSubTab('tambah')" id="sub-tambah" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left">➕ Tambah Produk</button>
+                <p class="text-xs font-bold uppercase text-gray-400 tracking-wider px-3 mt-4 mb-1">Pengaturan</p>
+                <div class="px-3 py-2 bg-gray-50 rounded-lg border border-gray-100">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">No. WhatsApp Admin:</label>
+                    <input type="text" id="wa-number" value="628123456789" class="w-full bg-white border border-gray-200 rounded px-2 py-1 text-xs font-mono focus:outline-pink-500">
+                </div>
+            </aside>
+
+            <!-- Konten Utama Admin -->
+            <section class="flex-1">
+                
+                <!-- SUB-TAB A: DASHBOARD UTAMA -->
+                <div id="admin-sub-dashboard" class="space-y-6">
+                    <!-- Kartu Statistik -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                            <p class="text-xs text-gray-500 font-medium uppercase">Total Produk</p>
+                            <p id="stat-total" class="text-2xl font-bold text-gray-900 mt-1">9</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                            <p class="text-xs text-gray-500 font-medium uppercase">Tersedia</p>
+                            <p id="stat-ready" class="text-2xl font-bold text-green-600 mt-1">8</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                            <p class="text-xs text-gray-500 font-medium uppercase">Stok Habis</p>
+                            <p id="stat-empty" class="text-2xl font-bold text-red-600 mt-1">1</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                            <p class="text-xs text-gray-500 font-medium uppercase">Kategori</p>
+                            <p class="text-2xl font-bold text-blue-600 mt-1">6</p>
+                        </div>
+                    </div>
+
+                    <!-- List Manajemen Produk di Admin -->
+                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                        <div class="px-5 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                            <h4 class="font-bold text-gray-900 text-sm">Daftar Produk & Kontrol</h4>
+                            <span class="text-xs text-gray-500">Gunakan sakelar untuk mengubah ketersediaan produk</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm border-collapse">
+                                <thead class="bg-gray-100 text-gray-600 text-xs uppercase font-semibold">
+                                    <tr>
+                                        <th class="p-4">Produk</th>
+                                        <th class="p-4">Kategori</th>
+                                        <th class="p-4">Harga</th>
+                                        <th class="p-4">Status</th>
+                                        <th class="p-4 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-table-body" class="divide-y divide-gray-100">
+                                    <!-- Daftar Baris Tabel Produk diisi JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB B: FORM TAMBAH PRODUK -->
+                <div id="admin-sub-tambah" class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 hidden">
+                    <h4 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Upload / Tambah Produk Baru</h4>
+                    <form id="form-add-product" onsubmit="simpanProdukBaru(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Nama Rangkaian Bunga</label>
+                                <input type="text" id="in-name" required placeholder="Contoh: Buket Mawar Merah Premium" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-pink-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Kategori Acara</label>
+                                <select id="in-category" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-pink-500">
+                                    <option value="Ulang Tahun">Ulang Tahun</option>
+                                    <option value="Pernikahan">Pernikahan</option>
+                                    <option value="Wisuda">Wisuda</option>
+                                    <option value="Anniversary">Anniversary</option>
+                                    <option value="Congratulations">Congratulations</option>
+                                    <option value="Ucapan Duka">Ucapan Duka</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Harga (Rupiah)</label>
+                                <input type="number" id="in-price" required placeholder="Contoh: 185000" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-pink-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-600 mb-1">URL Foto Bunga (Gunakan Unsplash / Link Gambar)</label>
+                                <input type="url" id="in-image" required placeholder="https://images.unsplash.com/..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-pink-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Deskripsi Produk</label>
+                            <textarea id="in-desc" required rows="3" placeholder="Tulis rincian ukuran, jenis bunga segar, atau kelengkapan produk..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-pink-500"></textarea>
+                        </div>
+                        <div class="flex justify-end gap-2 pt-2">
+                            <button type="button" onclick="switchAdminSubTab('dashboard')" class="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 font-medium">Batal</button>
+                            <button type="submit" class="px-5 py-2 text-sm bg-pink-600 hover:bg-pink-700 rounded-lg text-white font-medium shadow-sm">Simpan & Publikasikan</button>
+                        </div>
+                    </form>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- SYSTEM DATABASE & REAKTIVITAS KODE -->
+    <script>
+        // Simulasi Database JSON (Sesuai dengan screenshot yang Anda berikan)
+        let databaseProduk = [
+            { id: 1, name: "Buket Mawar Merah Premium", category: "Anniversary", desc: "Rangkaian romantis untuk hari istimewa", price: 185000, status: "tersedia", image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=400&q=80" },
+            { id: 2, name: "Bunga Matahari Keceriaan", category: "Ulang Tahun", desc: "Sumber semangat dan kebahagiaan", price: 120000, status: "tersedia", image: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=400&q=80" },
+            { id: 3, name: "Lily Putih Elegan", category: "Pernikahan", desc: "Keanggunan untuk momen pernikahan", price: 225000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400&q=80" },
+            { id: 4, name: "Buket Wisuda Colorful", category: "Wisuda", desc: "Rayakan pencapaian dengan bunga warna-warni", price: 165000, status: "tersedia", image: "https://images.unsplash.com/photo-1533616688419-b7a585564566?w=400&q=80" },
+            { id: 5, name: "Gerbera Pelangi Congratulations", category: "Congratulations", desc: "Rayakan keberhasilan dengan warna ceria", price: 175000, status: "tersedia", image: "https://images.unsplash.com/photo-1587334206506-697666d724f7?w=400&q=80" },
+            { id: 6, name: "Mawar Emas Grand Opening", category: "Congratulations", desc: "Untuk momen pencapaian besar", price: 280000, status: "tersedia", image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" },
+            { id: 7, name: "Rangkaian Duka Chrysant Putih", category: "Ucapan Duka", desc: "Tanda bela sungkawa yang tulus", price: 195000, status: "tersedia", image: "https://images.unsplash.com/photo-1550950158-d0d960dff51b?w=400&q=80" },
+            { id: 8, name: "Mini Bouquet Manis", category: "Ulang Tahun", desc: "Hadiah kecil yang penuh makna", price: 95000, status: "tersedia", image: "https://images.unsplash.com/photo-1562447435-08e988358bea?w=400&q=80" },
+            { id: 9, name: "Akasia & Lavender Rustic", category: "Ucapan Duka", desc: "Nuansa alam yang menenangkan", price: 145000, status: "habis", image: "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=400&q=80" }
+        ];
+
+        let currentKategoriFilter = "Semua";
+
+        // Fungsi Tukar Halaman Utama (Katalog vs Admin)
+        function switchView(view) {
+            document.getElementById('view-katalog').classList.add('hidden');
+            document.getElementById('view-admin').classList.add('hidden');
+            document.getElementById('btn-view-katalog').className = "px-4 py-2 text-sm font-medium rounded-lg text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 transition";
+            document.getElementById('btn-view-admin').className = "px-4 py-2 text-sm font-medium rounded-lg text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 transition";
+
+            if(view === 'katalog') {
+                document.getElementById('view-katalog').classList.remove('hidden');
+                document.getElementById('btn-view-katalog').className = "px-4 py-2 text-sm font-medium rounded-lg bg-pink-600 text-white shadow-sm transition";
+            } else {
+                document.getElementById('view-admin').classList.remove('hidden');
+                document.getElementById('btn-view-admin').className = "px-4 py-2 text-sm font-medium rounded-lg bg-gray-800 text-white shadow-sm transition";
+            }
+            renderAplikasi();
+        }
+
+        // Fungsi Tukar Sub-tab di Panel Admin
+        function switchAdminSubTab(sub) {
+            document.getElementById('admin-sub-dashboard').classList.add('hidden');
+            document.getElementById('admin-sub-tambah').classList.add('hidden');
+            document.getElementById('sub-dash').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left";
+            document.getElementById('sub-tambah').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left";
+
+            if(sub === 'dashboard') {
+                document.getElementById('admin-sub-dashboard').classList.remove('hidden');
+                document.getElementById('sub-dash').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-pink-600 bg-pink-50 font-medium text-left";
+            } else {
+                document.getElementById('admin-sub-tambah').classList.remove('hidden');
+                document.getElementById('sub-tambah').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-pink-600 bg-pink-50 font-medium text-left";
+            }
+        }
+
+        // Filter Kategori Katalog Publik
+        function filterKategori(kat) {
+            currentKategoriFilter = kat;
+            const buttons = document.querySelectorAll('[id^="cat-"]');
+            buttons.forEach(b => b.classList.remove('active-tab'));
+            document.getElementById(`cat-${kat}`).classList.add('active-tab');
+            renderKatalog();
+        }
+
+        // Fungsi Helper Mengubah Format Angka ke Format Rupiah (Rp)
+        function formatRupiah(angka) {
+            return "Rp " + angka.toLocaleString('id-ID');
+        }
+
+        // Render Katalog Utama
+        function renderKatalog() {
+            const grid = document.getElementById('catalog-grid');
+            grid.innerHTML = "";
+
+            let filtered = databaseProduk.filter(p => currentKategoriFilter === "Semua" || p.category === currentKategoriFilter);
+            document.getElementById('product-count-badge').innerText = `${filtered.length} tersedia`;
+
+            filtered.forEach(p => {
+                const isHabis = p.status === 'habis';
+                const card = `
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between ${isHabis ? 'opacity-70' : ''}">
+                        <div>
+                            <div class="relative">
+                                <img src="${p.image}" alt="${p.name}" class="h-48 w-full object-cover">
+                                ${isHabis ? '<span class="absolute top-2 right-2 bg-red-600 text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded shadow">Habis</span>' : ''}
+                            </div>
+                            <div class="p-4">
+                                <span class="text-[10px] font-bold text-pink-600 bg-pink-50 border border-pink-100 px-2 py-0.5 rounded-full uppercase">${p.category}</span>
+                                <h4 class="font-bold text-gray-900 mt-2 text-sm line-clamp-1">${p.name}</h4>
+                                <p class="text-xs text-gray-500 mt-1 line-clamp-2">${p.desc}</p>
+                            </div>
+                        </div>
+                        <div class="px-4 pb-4">
+                            <p class="text-base font-extrabold text-pink-600">${formatRupiah(p.price)}</p>
+                            <button onclick="kirimWhatsApp(${p.id})" ${isHabis ? 'disabled class="mt-3 w-full bg-gray-300 text-gray-500 font-medium py-2 rounded-lg text-xs cursor-not-allowed"' : 'class="mt-3 w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 transition shadow-sm"'} >
+                                📲 Pesan via WA
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        // Render Dashboard Admin (Tabel & Statistik)
+        function renderAdmin() {
+            // Update Statistik Angka
+            const total = databaseProduk.length;
+            const ready = databaseProduk.filter(p => p.status === 'tersedia').length;
+            const empty = databaseProduk.filter(p => p.status === 'habis').length;
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-ready').innerText = ready;
+            document.getElementById('stat-empty').innerText = empty;
+
+            // Render Baris Tabel
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = "";
+
+            databaseProduk.forEach(p => {
+                const tr = `
+                    <tr class="hover:bg-gray-50/80 transition">
+                        <td class="p-4 flex items-center gap-3">
+                            <img src="${p.image}" class="w-10 h-10 object-cover rounded-md border border-gray-200">
+                            <div>
+                                <p class="font-bold text-gray-900 text-xs">${p.name}</p>
+                                <p class="text-[10px] text-gray-400 line-clamp-1">${p.desc}</p>
+                            </div>
+                        </td>
+                        <td class="p-4 text-xs text-gray-600 font-medium">${p.category}</td>
+                        <td class="p-4 text-xs font-bold text-gray-900">${formatRupiah(p.price)}</td>
+                        <td class="p-4 text-xs">
+                            <span class="px-2.5 py-0.5 rounded-full font-semibold text-[10px] uppercase ${p.status === 'tersedia' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+                                ${p.status}
+                            </span>
+                        </td>
+                        <td class="p-4 text-center">
+                            <div class="inline-flex rounded-md shadow-sm" role="group">
+                                <button onclick="toggleStatus(${p.id})" class="px-2 py-1 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-50 focus:z-10 focus:ring-1 focus:ring-pink-500">🔄 Status</button>
+                                <button onclick="hapusProduk(${p.id})" class="px-2 py-1 text-xs font-medium text-red-600 bg-white border-y border-r border-gray-200 rounded-r-lg hover:bg-red-50 focus:z-10 focus:ring-1 focus:ring-pink-500">🗑️ Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += tr;
+            });
+        }
+
+        // Integrasi Tautan Klik Kirim Pesan ke WhatsApp Otomatis
+        function kirimWhatsApp(id) {
+            const waAdmin = document.getElementById('wa-number').value || "628123456789";
+            const produk = databaseProduk.find(p => p.id === id);
+            if(!produk) return;
+
+            const formatPesan = `Halo Admin Florist Nusantara,\n\nSaya tertarik dan ingin memesan karangan bunga berikut:\n\n` +
+                                `💐 *Nama Produk:* ${produk.name}\n` +
+                                `📂 *Kategori:* ${produk.category}\n` +
+                                `💰 *Harga:* ${formatRupiah(produk.price)}\n\n` +
+                                `Mohon diinformasikan ketersediaan pengerjaan dan detail pengirimannya. Terima kasih!`;
+
+            const linkWA = `https://api.whatsapp.com/send?phone=${waAdmin}&text=${encodeURIComponent(formatPesan)}`;
+            window.open(linkWA, '_blank');
+        }
+
+        // Aksi Admin: Toggle Ganti Status (Tersedia / Habis)
+        function toggleStatus(id) {
+            databaseProduk = databaseProduk.map(p => {
+                if(p.id === id) {
+                    p.status = p.status === 'tersedia' ? 'habis' : 'tersedia';
+                }
+                return p;
+            });
+            renderAplikasi();
+        }
+
+        // Aksi Admin: Hapus Produk
+        function hapusProduk(id) {
+            if(confirm("Apakah Anda yakin ingin menghapus produk ini dari katalog?")) {
+                databaseProduk = databaseProduk.filter(p => p.id !== id);
+                renderAplikasi();
+            }
+        }
+
+        // Aksi Admin: Form Submit Tambah Produk
+        function simpanProdukBaru(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('in-name').value;
+            const category = document.getElementById('in-category').value;
+            const price = parseInt(document.getElementById('in-price').value);
+            const image = document.getElementById('in-image').value;
+            const desc = document.getElementById('in-desc').value;
+
+            const produkBaru = {
+                id: Date.now(), // Generate ID Unik acak berbasis waktu milidetik
+                name: name,
+                category: category,
+                desc: desc,
+                price: price,
+                status: "tersedia",
+                image: image
+            };
+
+            databaseProduk.unshift(produkBaru); // Masukkan di urutan paling atas/terbaru
+            document.getElementById('form-add-product').reset(); // Reset form isian
+            
+            alert("Produk baru berhasil ditambahkan!");
+            switchAdminSubTab('dashboard'); // Kembali ke list dashboard
+            renderAplikasi();
+        }
+
+        // Fungsi Global untuk Menggambar Ulang Seluruh Tampilan Web
+        function renderAplikasi() {
+            renderKatalog();
+            renderAdmin();
+        }
+
+        // Inisialisasi awal saat halaman web pertama kali dibuka
+        renderAplikasi();
+    </script>
+</body>
+</html>
