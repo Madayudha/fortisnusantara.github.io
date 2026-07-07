@@ -208,4 +208,209 @@
         let databaseProduk = [
             { id: 1, name: "Buket Mawar Merah Premium", category: "Anniversary", desc: "Rangkaian romantis untuk hari istimewa", price: 185000, status: "tersedia", image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=400&q=80" },
             { id: 2, name: "Bunga Matahari Keceriaan", category: "Ulang Tahun", desc: "Sumber semangat dan kebahagiaan", price: 120000, status: "tersedia", image: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=400&q=80" },
-            { id: 3, name: "Lily Putih Elegan", category: "Pernikahan", desc: "Keanggunan untuk momen pernikahan", price: 225000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400
+            { id: 3, name: "Lily Putih Elegan", category: "Pernikahan", desc: "Keanggunan untuk momen pernikahan", price: 225000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400&q=80" },
+            { id: 4, name: "Buket Wisuda Colorful", category: "Wisuda", desc: "Rayakan pencapaian dengan bunga warna-warni", price: 165000, status: "tersedia", image: "https://images.unsplash.com/photo-1533616688419-b7a585564566?w=400&q=80" },
+            { id: 5, name: "Gerbera Pelangi Congratulations", category: "Congratulations", desc: "Rayakan keberhasilan dengan warna ceria", price: 175000, status: "tersedia", image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" },
+            { id: 6, name: "Mawar Emas Grand Opening", category: "Congratulations", desc: "Untuk momen pencapaian besar", price: 280000, status: "tersedia", image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" },
+            { id: 7, name: "Rangkaian Duka Chrysant Putih", category: "Ucapan Duka", desc: "Tanda bela sungkawa yang tulus", price: 195000, status: "tersedia", image: "https://images.unsplash.com/photo-1550950158-d0d960dff51b?w=400&q=80" },
+            { id: 8, name: "Mini Bouquet Manis", category: "Ulang Tahun", desc: "Hadiah kecil yang penuh makna", price: 95000, status: "tersedia", image: "https://images.unsplash.com/photo-1562447435-08e988358bea?w=400&q=80" },
+            { id: 9, name: "Akasia & Lavender Rustic", category: "Ucapan Duka", desc: "Nuansa alam yang menenangkan", price: 145000, status: "habis", image: "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=400&q=80" }
+        ];
+
+        let currentKategoriFilter = "Semua";
+
+        // Fungsi Membuka Modal Login
+        function openLoginModal() {
+            if (isLoggedIn) {
+                switchView('admin');
+            } else {
+                document.getElementById('login-modal').classList.remove('hidden');
+                document.getElementById('login-error').classList.add('hidden');
+                document.getElementById('form-login').reset();
+            }
+        }
+
+        // Fungsi Menutup Modal Login
+        function closeLoginModal() {
+            document.getElementById('login-modal').classList.add('hidden');
+        }
+
+        // Fungsi Validasi Kredensial Login
+        function handleLogin(event) {
+            event.preventDefault();
+            const userIn = document.getElementById('login-username').value;
+            const passIn = document.getElementById('login-password').value;
+            const errorDiv = document.getElementById('login-error');
+
+            if (userIn === "admin" && passIn === "admin") {
+                isLoggedIn = true;
+                errorDiv.classList.add('hidden');
+                closeLoginModal();
+                switchView('admin');
+            } else {
+                errorDiv.classList.remove('hidden');
+            }
+        }
+
+        // Fungsi Logout
+        function handleLogout() {
+            isLoggedIn = false;
+            switchView('katalog');
+        }
+
+        // Fungsi Tukar Halaman Utama (Katalog vs Admin)
+        function switchView(view) {
+            if (view === 'admin' && !isLoggedIn) {
+                openLoginModal();
+                return;
+            }
+
+            document.getElementById('view-katalog').classList.add('hidden');
+            document.getElementById('view-admin').classList.add('hidden');
+            document.getElementById('btn-view-katalog').className = "px-4 py-2 text-sm font-medium rounded-lg text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 transition";
+            document.getElementById('btn-view-admin').className = "px-4 py-2 text-sm font-medium rounded-lg text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 transition";
+
+            if(view === 'katalog') {
+                document.getElementById('view-katalog').classList.remove('hidden');
+                document.getElementById('btn-view-katalog').className = "px-4 py-2 text-sm font-medium rounded-lg bg-pink-600 text-white shadow-sm transition";
+            } else {
+                document.getElementById('view-admin').classList.remove('hidden');
+                document.getElementById('btn-view-admin').className = "px-4 py-2 text-sm font-medium rounded-lg bg-gray-800 text-white shadow-sm transition";
+            }
+            renderAplikasi();
+        }
+
+        // Fungsi Tukar Sub-tab di Panel Admin
+        function switchAdminSubTab(sub) {
+            document.getElementById('admin-sub-dashboard').classList.add('hidden');
+            document.getElementById('admin-sub-tambah').classList.add('hidden');
+            document.getElementById('sub-dash').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left";
+            document.getElementById('sub-tambah').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left";
+
+            if(sub === 'dashboard') {
+                document.getElementById('admin-sub-dashboard').classList.remove('hidden');
+                document.getElementById('sub-dash').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-pink-600 bg-pink-50 font-medium text-left";
+            } else {
+                document.getElementById('admin-sub-tambah').classList.remove('hidden');
+                document.getElementById('sub-tambah').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-pink-600 bg-pink-50 font-medium text-left";
+            }
+        }
+
+        // Filter Kategori Katalog Publik
+        function filterKategori(kat) {
+            currentKategoriFilter = kat;
+            const buttons = document.querySelectorAll('[id^="cat-"]');
+            buttons.forEach(b => b.classList.remove('active-tab'));
+            document.getElementById(`cat-${kat}`).classList.add('active-tab');
+            renderKatalog();
+        }
+
+        // Fungsi Helper Mengubah Format Angka ke Format Rupiah (Rp)
+        function formatRupiah(angka) {
+            return "Rp " + angka.toLocaleString('id-ID');
+        }
+
+        // Render Katalog Utama
+        function renderKatalog() {
+            const grid = document.getElementById('catalog-grid');
+            grid.innerHTML = "";
+
+            let filtered = databaseProduk.filter(p => currentKategoriFilter === "Semua" || p.category === currentKategoriFilter);
+            document.getElementById('product-count-badge').innerText = `${filtered.length} tersedia`;
+
+            filtered.forEach(p => {
+                const isHabis = p.status === 'habis';
+                const card = `
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between ${isHabis ? 'opacity-70' : ''}">
+                        <div>
+                            <div class="relative">
+                                <img src="${p.image}" alt="${p.name}" class="h-48 w-full object-cover">
+                                ${isHabis ? '<span class="absolute top-2 right-2 bg-red-600 text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded shadow">Habis</span>' : ''}
+                            </div>
+                            <div class="p-4">
+                                <span class="text-[10px] font-bold text-pink-600 bg-pink-50 border border-pink-100 px-2 py-0.5 rounded-full uppercase">${p.category}</span>
+                                <h4 class="font-bold text-gray-900 mt-2 text-sm line-clamp-1">${p.name}</h4>
+                                <p class="text-xs text-gray-500 mt-1 line-clamp-2">${p.desc}</p>
+                            </div>
+                        </div>
+                        <div class="px-4 pb-4">
+                            <p class="font-bold text-gray-900 text-sm">${formatRupiah(p.price)}</p>
+                        </div>
+                    </div>`;
+                grid.insertAdjacentHTML('beforeend', card);
+            });
+        }
+
+        // Render Admin Dashboard
+        function renderAdmin() {
+            const tbody = document.getElementById('admin-table-body');
+            if(!tbody) return;
+            tbody.innerHTML = "";
+
+            let total = databaseProduk.length;
+            let ready = databaseProduk.filter(p => p.status === 'tersedia').length;
+            let empty = total - ready;
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-ready').innerText = ready;
+            document.getElementById('stat-empty').innerText = empty;
+
+            databaseProduk.forEach(p => {
+                const tr = `
+                    <tr>
+                        <td class="p-4 flex items-center gap-3">
+                            <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg">
+                            <div>
+                                <p class="font-bold text-gray-900 text-xs">${p.name}</p>
+                                <p class="text-[10px] text-gray-400 line-clamp-1 max-w-xs">${p.desc}</p>
+                            </div>
+                        </td>
+                        <td class="p-4 text-xs font-medium text-gray-600">${p.category}</td>
+                        <td class="p-4 text-xs font-bold text-gray-900">${formatRupiah(p.price)}</td>
+                        <td class="p-4">
+                            <span class="px-2 py-1 text-[10px] font-bold rounded-full uppercase ${p.status === 'tersedia' ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200'}">${p.status}</span>
+                        </td>
+                        <td class="p-4 text-center">
+                            <button onclick="toggleStatus(${p.id})" class="text-xs px-2.5 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition font-medium">Ubah Status</button>
+                        </td>
+                    </tr>`;
+                tbody.insertAdjacentHTML('beforeend', tr);
+            });
+        }
+
+        function toggleStatus(id) {
+            let p = databaseProduk.find(prod => prod.id === id);
+            if(p) {
+                p.status = p.status === 'tersedia' ? 'habis' : 'tersedia';
+                renderAplikasi();
+            }
+        }
+
+        function simpanProdukBaru(e) {
+            e.preventDefault();
+            const name = document.getElementById('in-name').value;
+            const category = document.getElementById('in-category').value;
+            const price = parseInt(document.getElementById('in-price').value);
+            const image = document.getElementById('in-image').value;
+            const desc = document.getElementById('in-desc').value;
+
+            const newId = databaseProduk.length ? Math.max(...databaseProduk.map(p => p.id)) + 1 : 1;
+            databaseProduk.push({ id: newId, name, category, price, desc, status: 'tersedia', image });
+
+            document.getElementById('form-add-product').reset();
+            switchAdminSubTab('dashboard');
+            renderAplikasi();
+        }
+
+        function renderAplikasi() {
+            renderKatalog();
+            renderAdmin();
+        }
+
+        // Jalankan saat halaman dibuka pertama kali
+        window.onload = function() {
+            renderAplikasi();
+        }
+    </script>
+</body>
+</html>
