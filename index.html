@@ -28,7 +28,6 @@
     <div id="login-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" onclick="closeLoginModal()"></div>
-
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
             <div class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full">
                 <div class="bg-white px-6 pt-6 pb-4">
@@ -38,12 +37,10 @@
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 mb-1" id="modal-title">Login Super Admin</h3>
                         <p class="text-xs text-gray-500 mb-6">Masukkan kredensial khusus untuk mengakses dasbor</p>
-                        
                         <form id="form-login" onsubmit="handleLogin(event)" class="w-full space-y-4">
                             <div id="login-error" class="hidden p-3 text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg font-medium text-center">
                                 Username atau password salah!
                             </div>
-
                             <div>
                                 <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Username</label>
                                 <input type="text" id="login-username" required placeholder="Masukkan username" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
@@ -63,11 +60,69 @@
         </div>
     </div>
 
+    <div id="detail-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-4 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-60" onclick="closeDetailModal()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            
+            <div class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+                <div class="absolute top-4 right-4 z-10">
+                    <button onclick="closeDetailModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full p-2 focus:outline-none transition">✕</button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="bg-gray-100 flex items-center justify-center p-4">
+                        <img id="detail-img" src="" alt="Foto Produk" class="max-h-[450px] w-full object-contain rounded-lg shadow-sm">
+                    </div>
+                    
+                    <div class="p-6 flex flex-col justify-between h-[450px] overflow-y-auto">
+                        <div>
+                            <span id="detail-cat" class="text-[10px] font-bold text-pink-600 bg-pink-50 border border-pink-100 px-2 py-0.5 rounded-full uppercase">KATEGORI</span>
+                            <h3 id="detail-name" class="text-xl font-bold text-gray-900 mt-2">Nama Rangkaian Bunga</h3>
+                            <p id="detail-price" class="text-lg font-extrabold text-pink-600 mt-1">Rp 0</p>
+                            
+                            <div class="mt-4 border-t pt-3">
+                                <h4 class="text-xs font-bold uppercase text-gray-400 tracking-wider">Deskripsi Produk:</h4>
+                                <p id="detail-desc" class="text-sm text-gray-600 mt-1">Ini adalah rincian deskripsi produk rangkaian bunga.</p>
+                            </div>
+
+                            <div class="mt-6 border-t pt-3">
+                                <h4 class="text-xs font-bold uppercase text-gray-400 tracking-wider mb-2">Ulasan Pelanggan (<span id="review-count">0</span>):</h4>
+                                <div id="review-list" class="space-y-3 max-h-40 overflow-y-auto mb-4 pr-1">
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="border-t pt-3 bg-white sticky bottom-0">
+                            <form id="form-review" onsubmit="simpanReview(event)" class="space-y-2">
+                                <input type="hidden" id="review-product-id">
+                                <div class="grid grid-cols-3 gap-2">
+                                    <input type="text" id="rev-name" required placeholder="Nama Anda" class="col-span-2 border border-gray-300 rounded-lg p-1.5 text-xs focus:outline-pink-500">
+                                    <select id="rev-star" class="col-span-1 border border-gray-300 rounded-lg p-1.5 text-xs focus:outline-pink-500">
+                                        <option value="5">⭐ 5</option>
+                                        <option value="4">⭐ 4</option>
+                                        <option value="3">⭐ 3</option>
+                                        <option value="2">⭐ 2</option>
+                                        <option value="1">⭐ 1</option>
+                                    </select>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="text" id="rev-comment" required placeholder="Tulis ulasan singkat mengenai produk ini..." class="flex-1 border border-gray-300 rounded-lg p-1.5 text-xs focus:outline-pink-500">
+                                    <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition shadow-sm">Kirim</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main id="view-katalog" class="max-w-7xl mx-auto px-4 py-8">
         <div class="bg-cyan-400 rounded-2xl p-8 text-center text-white mb-8 shadow-md">
             <h2 class="text-3xl md:text-4xl font-bold mb-2">Karangan <span class="text-yellow-300">Bunga Spesial</span></h2>
             <p class="font-bold text-white drop-shadow-md text-sm md:text-base mb-6">Sampaikan perasaan tulus dengan bunga pilihan terbaik</p>
-            <div class="flex flex-wrap justify-center gap-2 text-xs md:text-sm"></div>
         </div>
 
         <div class="border-b border-gray-200 mb-8 overflow-x-auto flex gap-6 text-sm text-gray-500 whitespace-nowrap">
@@ -83,7 +138,7 @@
 
         <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span>Semua Produk</span>
-            <span id="product-count-badge" class="bg-gray-200 text-gray-700 text-xs px-2.5 py-0.5 rounded-full">10 tersedia</span>
+            <span id="product-count-badge" class="bg-gray-200 text-gray-700 text-xs px-2.5 py-0.5 rounded-full">0 tersedia</span>
         </h3>
         <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             </div>
@@ -91,7 +146,6 @@
 
     <main id="view-admin" class="max-w-7xl mx-auto px-4 py-8 hidden">
         <div class="flex flex-col lg:flex-row gap-8">
-            
             <aside class="w-full lg:w-64 flex flex-col gap-1.5 bg-white p-4 rounded-xl border border-gray-200 shadow-sm h-fit">
                 <div class="flex items-center gap-3 px-3 py-2 border-b border-gray-100 mb-3">
                     <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold">SA</div>
@@ -106,7 +160,7 @@
                 <p class="text-xs font-bold uppercase text-gray-400 tracking-wider px-3 mt-4 mb-1">Pengaturan</p>
                 <div class="px-3 py-2 bg-gray-50 rounded-lg border border-gray-100">
                     <label class="block text-xs font-semibold text-gray-600 mb-1">No. WhatsApp Admin:</label>
-                    <input type="text" id="wa-number" value="6285249949549" class="w-full bg-white border border-gray-200 rounded px-2 py-1 text-xs font-mono focus:outline-pink-500" onchange="renderKatalog()">
+                    <input type="text" id="wa-number" value="628123456789" class="w-full bg-white border border-gray-200 rounded px-2 py-1 text-xs font-mono focus:outline-pink-500" onchange="renderKatalog()">
                 </div>
                 <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 mt-4 text-sm rounded-lg text-red-600 hover:bg-red-50 font-medium text-left">🚪 Keluar</button>
             </aside>
@@ -116,15 +170,15 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
                             <p class="text-xs text-gray-500 font-medium uppercase">Total Produk</p>
-                            <p id="stat-total" class="text-2xl font-bold text-gray-900 mt-1">10</p>
+                            <p id="stat-total" class="text-2xl font-bold text-gray-900 mt-1">0</p>
                         </div>
                         <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
                             <p class="text-xs text-gray-500 font-medium uppercase">Tersedia</p>
-                            <p id="stat-ready" class="text-2xl font-bold text-green-600 mt-1">9</p>
+                            <p id="stat-ready" class="text-2xl font-bold text-green-600 mt-1">0</p>
                         </div>
                         <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
                             <p class="text-xs text-gray-500 font-medium uppercase">Stok Habis</p>
-                            <p id="stat-empty" class="text-2xl font-bold text-red-600 mt-1">1</p>
+                            <p id="stat-empty" class="text-2xl font-bold text-red-600 mt-1">0</p>
                         </div>
                         <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
                             <p class="text-xs text-gray-500 font-medium uppercase">Kategori</p>
@@ -135,7 +189,7 @@
                     <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
                         <div class="px-5 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
                             <h4 class="font-bold text-gray-900 text-sm">Daftar Produk & Kontrol</h4>
-                            <span class="text-xs text-gray-500">Gunakan sakelar untuk mengubah ketersediaan produk</span>
+                            <span class="text-xs text-gray-500">Gunakan kontrol di bawah untuk memanajemen produk</span>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-sm border-collapse">
@@ -182,8 +236,8 @@
                                 <input type="number" id="in-price" required placeholder="Contoh: 185000" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-pink-500">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold uppercase text-gray-600 mb-1">URL Foto Bunga</label>
-                                <input type="url" id="in-image" required placeholder="https://images.unsplash.com/..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-pink-500">
+                                <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Upload File Foto Bunga</label>
+                                <input type="file" id="in-image-file" accept="image/*" required class="w-full border border-gray-300 rounded-lg p-2 text-sm bg-white file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 focus:outline-pink-500">
                             </div>
                         </div>
                         <div>
@@ -203,17 +257,18 @@
     <script>
         let isLoggedIn = false;
 
+        // Ditambahkan array data 'reviews' di setiap objek produk default
         let databaseProduk = [
-            { id: 1, name: "Buket Mawar Merah Premium", category: "Anniversary", desc: "Rangkaian romantis untuk hari istimewa", price: 185000, status: "tersedia", image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=400&q=80" },
-            { id: 2, name: "Bunga Matahari Keceriaan", category: "Ulang Tahun", desc: "Sumber semangat dan kebahagiaan", price: 120000, status: "tersedia", image: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=400&q=80" },
-            { id: 3, name: "Lily Putih Elegan", category: "Pernikahan", desc: "Keanggunan untuk momen pernikahan", price: 225000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400&q=80" },
-            { id: 4, name: "Buket Wisuda Colorful", category: "Wisuda", desc: "Rayakan pencapaian dengan bunga warna-warni", price: 165000, status: "tersedia", image: "https://images.unsplash.com/photo-1533616688419-b7a585564566?w=400&q=80" },
-            { id: 5, name: "Gerbera Pelangi Congratulations", category: "Congratulations", desc: "Rayakan keberhasilan dengan warna ceria", price: 175000, status: "tersedia", image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" },
-            { id: 6, name: "Mawar Emas Grand Opening", category: "Congratulations", desc: "Untuk momen pencapaian besar", price: 280000, status: "tersedia", image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" },
-            { id: 7, name: "Rangkaian Duka Chrysant Putih", category: "Ucapan Duka", desc: "Tanda bela sungkawa yang tulus", price: 195000, status: "tersedia", image: "https://images.unsplash.com/photo-1550950158-d0d960dff51b?w=400&q=80" },
-            { id: 8, name: "Mini Bouquet Manis", category: "Ulang Tahun", desc: "Hadiah kecil yang penuh makna", price: 95000, status: "tersedia", image: "Image/Gerbang1.jpg" },
-            { id: 9, name: "Akasia & Lavender Rustic", category: "Ucapan Duka", desc: "Nuansa alam yang menenangkan", price: 145000, status: "habis", image: "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=400&q=80" },
-            { id: 10, name: "Akasia", category: "Akrilik", desc: "Kemenangan yang menenangkan", price: 145000, status: "tersedia", image: "Image/akrilik.jpeg" },
+            { id: 1, name: "Buket Mawar Merah Premium", category: "Anniversary", desc: "Rangkaian romantis mawar merah segar berukuran besar untuk hari istimewa Anda bersama pasangan.", price: 185000, status: "tersedia", image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=400&q=80", reviews: [{name: "Siti", star: 5, comment: "Bunganya harum sekali dan sangat segar!"}] },
+            { id: 2, name: "Bunga Matahari Keceriaan", category: "Ulang Tahun", desc: "Sumber semangat dan kebahagiaan, sangat cocok dihadiahkan kepada teman dekat.", price: 120000, status: "tersedia", image: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=400&q=80", reviews: [] },
+            { id: 3, name: "Lily Putih Elegan", category: "Pernikahan", desc: "Keanggunan berkelas untuk momen dekorasi dan pesta pernikahan sakral.", price: 225000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400&q=80", reviews: [] },
+            { id: 4, name: "Buket Wisuda Colorful", category: "Wisuda", desc: "Rayakan pencapaian kelulusan dengan bunga warna-warni ceria lengkap dengan pita.", price: 165000, status: "tersedia", image: "https://images.unsplash.com/photo-1533616688419-b7a585564566?w=400&q=80", reviews: [] },
+            { id: 5, name: "Gerbera Pelangi Congratulations", category: "Congratulations", desc: "Rayakan keberhasilan grand opening toko atau bisnis baru dengan papan gerbera ceria.", price: 175000, status: "tersedia", image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80", reviews: [] },
+            { id: 6, name: "Mawar Emas Grand Opening", category: "Congratulations", desc: "Untuk momen selebrasi pencapaian korporasi besar nan megah.", price: 280000, status: "tersedia", image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80", reviews: [] },
+            { id: 7, name: "Rangkaian Duka Chrysant Putih", category: "Ucapan Duka", desc: "Tanda belasungkawa mendalam yang tulus dan menenangkan pihak keluarga.", price: 195000, status: "tersedia", image: "https://images.unsplash.com/photo-1550950158-d0d960dff51b?w=400&q=80", reviews: [] },
+            { id: 8, name: "Mini Bouquet Manis", category: "Ulang Tahun", desc: "Hadiah kejutan berukuran kecil namun penuh arti yang mendalam.", price: 95000, status: "tersedia", image: "https://images.unsplash.com/photo-1562447435-08e988358bea?w=400&q=80", reviews: [] },
+            { id: 9, name: "Akasia & Lavender Rustic", category: "Ucapan Duka", desc: "Kombinasi nuansa alam pedesaan yang menenangkan dan damai.", price: 145000, status: "habis", image: "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=400&q=80", reviews: [] },
+            { id: 10, name: "Akasia", category: "Akrilik", desc: "Kreasi bunga akrilik awet tahan lama yang indah dipajang di ruang tamu.", price: 145000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400&q=80", reviews: [] },
         ];
 
         let currentKategoriFilter = "Semua";
@@ -301,7 +356,7 @@
             return "Rp " + angka.toLocaleString('id-ID');
         }
 
-        // ====== MODIFIKASI: FUNGSI UTAMA RENDER KATALOG ======
+        // ====== MODIFIKASI: MENAMBAHKAN AKSI KLIK PADA CARD UTK PREVIEW DETAIL ======
         function renderKatalog() {
             const grid = document.getElementById('catalog-grid');
             grid.innerHTML = "";
@@ -309,45 +364,114 @@
             let filtered = databaseProduk.filter(p => currentKategoriFilter === "Semua" || p.category === currentKategoriFilter);
             document.getElementById('product-count-badge').innerText = `${filtered.length} tersedia`;
 
-            // Mengambil nomor WA dinamis dari input pengaturan admin
             const waNumber = document.getElementById('wa-number').value.replace(/\D/g, '');
 
             filtered.forEach(p => {
                 const isHabis = p.status === 'habis';
-                
-                // Menyusun teks template WhatsApp pesanan
                 const textMessage = encodeURIComponent(`Halo Florist Nusantara, saya ingin memesan produk berikut:\n\n*Nama Produk:* ${p.name}\n*Kategori:* ${p.category}\n*Harga:* ${formatRupiah(p.price)}\n\nApakah bisa diproses? Terima kasih.`);
                 const waLink = `https://wa.me/${waNumber}?text=${textMessage}`;
+                
+                // Kalkulasi rata-rata rating jika ada review
+                const totalReview = p.reviews ? p.reviews.length : 0;
+                const starAvg = totalReview > 0 ? (p.reviews.reduce((sum, r) => sum + parseInt(r.star), 0) / totalReview).toFixed(1) : "0.0";
 
                 const card = `
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between ${isHabis ? 'opacity-60' : ''}">
-                        <div>
-                            <div class="relative">
-                                <img src="${p.image}" alt="${p.name}" class="h-48 w-full object-cover">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between group hover:shadow-md transition">
+                        <div onclick="openDetailModal(${p.id})" class="cursor-pointer ${isHabis ? 'opacity-60' : ''}">
+                            <div class="relative overflow-hidden">
+                                <img src="${p.image}" alt="${p.name}" class="h-48 w-full object-cover group-hover:scale-105 transition duration-300">
                                 ${isHabis ? '<span class="absolute top-2 right-2 bg-red-600 text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded shadow">Habis</span>' : ''}
                             </div>
                             <div class="p-4">
-                                <span class="text-[10px] font-bold text-pink-600 bg-pink-50 border border-pink-100 px-2 py-0.5 rounded-full uppercase">${p.category}</span>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[10px] font-bold text-pink-600 bg-pink-50 border border-pink-100 px-2 py-0.5 rounded-full uppercase">${p.category}</span>
+                                    <span class="text-xs text-amber-500 font-semibold">⭐ ${starAvg} (${totalReview})</span>
+                                </div>
                                 <h4 class="font-bold text-gray-900 mt-2 text-sm line-clamp-1">${p.name}</h4>
                                 <p class="text-xs text-gray-500 mt-1 line-clamp-2">${p.desc}</p>
                             </div>
                         </div>
                         <div class="px-4 pb-4 space-y-3">
                             <p class="font-bold text-gray-900 text-base">${formatRupiah(p.price)}</p>
-                            
                             ${isHabis ? 
-                                `<button disabled class="w-full text-center bg-gray-200 text-gray-400 text-xs font-semibold py-2.5 px-4 rounded-xl cursor-not-allowed">
-                                    🚫 Stok Habis
-                                </button>` : 
+                                `<button disabled class="w-full text-center bg-gray-200 text-gray-400 text-xs font-semibold py-2.5 px-4 rounded-xl cursor-not-allowed">🚫 Stok Habis</button>` : 
                                 `<a href="${waLink}" target="_blank" class="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-95">
-                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.966 0c3.178.001 6.169 1.24 8.419 3.496 2.25 2.256 3.489 5.252 3.488 8.434-.004 6.617-5.34 11.964-11.912 11.964-2.006-.001-3.973-.506-5.722-1.47l-6.182 1.622zm6.275-3.666c1.652.98 3.267 1.492 4.981 1.493 5.432 0 9.851-4.42 9.854-9.857.002-2.634-1.022-5.111-2.883-6.974-1.86-1.862-4.341-2.885-6.983-2.886-5.439 0-9.858 4.422-9.862 9.86-.001 1.815.5 3.535 1.451 5.048L1.932 22.09l4.4-1.156zm12.18-5.313c-.33-.165-1.951-.963-2.251-1.073-.3-.109-.518-.165-.736.165-.218.329-.842 1.073-1.032 1.292-.19.218-.379.245-.71.081-.33-.165-1.393-.513-2.656-1.64-1.025-.915-1.717-2.046-1.919-2.376-.202-.33-.022-.507.143-.671.148-.147.33-.384.495-.577.165-.192.22-.32.33-.534.11-.213.055-.4-.028-.565-.083-.165-.736-1.774-1.009-2.434-.266-.64-.538-.553-.736-.563-.19-.01-.408-.012-.626-.012-.218 0-.573.082-.872.411-.3.33-1.145 1.118-1.145 2.727s1.171 3.161 1.334 3.38c.163.22 2.304 3.516 5.582 4.934.78.337 1.389.538 1.864.689.783.249 1.497.214 2.061.13.629-.094 1.951-.797 2.224-1.529.273-.733.273-1.359.19-1.488-.083-.13-.304-.213-.634-.378z"/></svg>
-                                    Pesan via WA
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.966 0c3.178.001 6.169 1.24 8.419 3.496 2.25 2.256 3.489 5.252 3.488 8.434-.004 6.617-5.34 11.964-11.912 11.964-2.006-.001-3.973-.506-5.722-1.47l-6.182 1.622zm6.275-3.666c1.652.98 3.267 1.492 4.981 1.493 5.432 0 9.851-4.42 9.854-9.857.002-2.634-1.022-5.111-2.883-6.974-1.86-1.862-4.341-2.885-6.983-2.886-5.439 0-9.858 4.422-9.862 9.86-.001 1.815.5 3.535 1.451 5.048L1.932 22.09l4.4-1.156zm12.18-5.313c-.33-.165-1.951-.963-2.251-1.073-.3-.109-.518-.165-.736.165-.218.329-.842 1.073-1.032 1.292-.19.218-.379.245-.71.081-.33-.165-1.393-.513-2.656-1.64-1.025-.915-1.717-2.046-1.919-2.376-.202-.33-.022-.507.143-.671.148-.147.33-.384.495-.577.165-.192.22-.32.33-.534.11-.213.055-.4-.028-.565-.083-.165-.736-1.774-1.009-2.434-.266-.64-.538-.553-.736-.563-.19-.01-.408-.012-.626-.012-.218 0-.573.082-.872.411-.3.33-1.145 1.118-1.145 2.727s1.171 3.161 1.334 3.38c.163.22 2.304 3.516 5.582 4.934.78.337 1.389.538 1.864.689.783.249 1.497.214 2.061.13.629-.094 1.951-.797 2.224-1.529.273-.733.273-1.359.19-1.488-.083-.13-.304-.213-.634-.378z"/></svg>Pesan via WA
                                 </a>`
                             }
                         </div>
                     </div>`;
                 grid.insertAdjacentHTML('beforeend', card);
             });
+        }
+
+        // ====== FUNGSI BARU: MODAL DETAIL / PREVIEW PERBESAR ======
+        function openDetailModal(id) {
+            const p = databaseProduk.find(prod => prod.id === id);
+            if (!p) return;
+
+            document.getElementById('review-product-id').value = p.id;
+            document.getElementById('detail-img').src = p.image;
+            document.getElementById('detail-cat').innerText = p.category;
+            document.getElementById('detail-name').innerText = p.name;
+            document.getElementById('detail-price').innerText = formatRupiah(p.price);
+            document.getElementById('detail-desc').innerText = p.desc;
+
+            renderReviewsList(p);
+
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+            document.getElementById('form-review').reset();
+        }
+
+        // ====== FUNGSI BARU: RENDER LIST REVIEW ======
+        function renderReviewsList(product) {
+            const listContainer = document.getElementById('review-list');
+            const countContainer = document.getElementById('review-count');
+            listContainer.innerHTML = "";
+
+            if (!product.reviews) product.reviews = [];
+            countContainer.innerText = product.reviews.length;
+
+            if (product.reviews.length === 0) {
+                listContainer.innerHTML = `<p class="text-xs text-gray-400 italic">Belum ada ulasan untuk produk ini. Jadilah yang pertama!</p>`;
+                return;
+            }
+
+            product.reviews.forEach(r => {
+                let stars = "⭐".repeat(r.star);
+                const reviewItem = `
+                    <div class="bg-gray-50 border border-gray-100 rounded-lg p-2.5">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-bold text-gray-800">${r.name}</span>
+                            <span class="text-[10px] text-amber-500">${stars}</span>
+                        </div>
+                        <p class="text-xs text-gray-600 font-normal">${r.comment}</p>
+                    </div>`;
+                listContainer.insertAdjacentHTML('beforeend', reviewItem);
+            });
+        }
+
+        // ====== FUNGSI BARU: SIMPAN REVIEW DARI PELANGGAN ======
+        function simpanReview(e) {
+            e.preventDefault();
+            const pId = parseInt(document.getElementById('review-product-id').value);
+            const name = document.getElementById('rev-name').value;
+            const star = parseInt(document.getElementById('rev-star').value);
+            const comment = document.getElementById('rev-comment').value;
+
+            const p = databaseProduk.find(prod => prod.id === pId);
+            if(p) {
+                if(!p.reviews) p.reviews = [];
+                p.reviews.unshift({ name, star, comment }); // Masukkan ulasan baru di baris teratas
+                
+                renderReviewsList(p);
+                renderKatalog(); // Update bintang rating rata-rata di halaman katalog depan
+                document.getElementById('form-review').reset();
+            }
         }
 
         function renderAdmin() {
@@ -379,18 +503,27 @@
                             <span class="px-2 py-1 text-[10px] font-bold rounded-full uppercase ${p.status === 'tersedia' ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200'}">${p.status}</span>
                         </td>
                         <td class="p-4 text-center">
-                            <button onclick="toggleStatus(${p.id})" class="text-xs px-2.5 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition font-medium">Ubah Status</button>
+                            <div class="flex items-center justify-center gap-2">
+                                <button onclick="toggleStatus(${p.id})" class="text-xs px-2.5 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition font-medium">Ubah Status</button>
+                                <button onclick="hapusProduk(${p.id})" class="text-xs px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-md transition font-medium">Hapus</button>
+                            </div>
                         </td>
                     </tr>`;
                 tbody.insertAdjacentHTML('beforeend', tr);
             });
         }
 
-        // Fungsi Tambahan / Utilitas bawaan template dasar
         function toggleStatus(id) {
             let p = databaseProduk.find(prod => prod.id === id);
             if(p) {
                 p.status = p.status === 'tersedia' ? 'habis' : 'tersedia';
+                renderAplikasi();
+            }
+        }
+
+        function hapusProduk(id) {
+            if(confirm("Apakah Anda yakin ingin menghapus produk ini secara permanen?")) {
+                databaseProduk = databaseProduk.filter(p => p.id !== id);
                 renderAplikasi();
             }
         }
@@ -400,15 +533,26 @@
             const name = document.getElementById('in-name').value;
             const category = document.getElementById('in-category').value;
             const price = parseInt(document.getElementById('in-price').value);
-            const image = document.getElementById('in-image').value;
             const desc = document.getElementById('in-desc').value;
+            
+            const fileInput = document.getElementById('in-image-file');
+            const file = fileInput.files[0];
 
-            const newId = databaseProduk.length ? Math.max(...databaseProduk.map(p => p.id)) + 1 : 1;
-            databaseProduk.push({ id: newId, name, category, price, desc, status: 'tersedia', image });
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imageBase64 = event.target.result;
+                    const newId = databaseProduk.length ? Math.max(...databaseProduk.map(p => p.id)) + 1 : 1;
+                    
+                    // Inisialisasi array ulasan/reviews kosong untuk produk baru
+                    databaseProduk.push({ id: newId, name, category, price, desc, status: 'tersedia', image: imageBase64, reviews: [] });
 
-            document.getElementById('form-add-product').reset();
-            switchAdminSubTab('dashboard');
-            renderAplikasi();
+                    document.getElementById('form-add-product').reset();
+                    switchAdminSubTab('dashboard');
+                    renderAplikasi();
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
         function renderAplikasi() {
