@@ -113,6 +113,8 @@
             <button onclick="filterKategori('Congratulations')" id="cat-Congratulations" class="pb-3">🎊 Congratulations</button>
             <button onclick="filterKategori('Ucapan Duka')" id="cat-Ucapan Duka" class="pb-3">🕊️ Ucapan Duka</button>
             <button onclick="filterKategori('Akrilik')" id="cat-Akrilik" class="pb-3">💎 Akrilik</button>
+            <button onclick="filterKategori('Buket Bunga')" id="cat-Buket Bunga" class="pb-3"> Buket Bunga</button>
+            
         </div>
 
         <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
@@ -139,7 +141,7 @@
                 <p class="text-xs font-bold uppercase text-gray-400 tracking-wider px-3 mt-4 mb-1">Pengaturan</p>
                 <div class="px-3 py-2 bg-gray-50 rounded-lg border border-gray-100">
                     <label class="block text-xs font-semibold text-gray-600 mb-1">No. WhatsApp Admin:</label>
-                    <input type="text" id="wa-number" value="628123456789" class="w-full bg-white border border-gray-200 rounded px-2 py-1 text-xs font-mono focus:outline-pink-500" onchange="renderKatalog()">
+                    <input type="text" id="wa-number" value="6285249949549" class="w-full bg-white border border-gray-200 rounded px-2 py-1 text-xs font-mono focus:outline-pink-500" onchange="renderKatalog()">
                 </div>
                 <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 mt-4 text-sm rounded-lg text-red-600 hover:bg-red-50 font-medium text-left">🚪 Keluar</button>
             </aside>
@@ -206,6 +208,7 @@
                                     <option value="Congratulations">Congratulations</option>
                                     <option value="Ucapan Duka">Ucapan Duka</option>
                                     <option value="Akrilik">Akrilik</option>
+                                    <option value="Buket Bunga">Buket Bunga</option>
                                 </select>
                             </div>
                         </div>
@@ -248,6 +251,7 @@
             { id: 8, name: "Mini Bouquet Manis", category: "Ulang Tahun", desc: "Hadiah kegutan berukuran kecil namun penuh arti yang mendalam.", price: 95000, status: "tersedia", image: "https://images.unsplash.com/photo-1562447435-08e988358bea?w=400&q=80" },
             { id: 9, name: "Akasia & Lavender Rustic", category: "Ucapan Duka", desc: "Kombinasi nuansa alam pedesaan yang menenangkan dan damai.", price: 145000, status: "habis", image: "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=400&q=80" },
             { id: 10, name: "Akasia", category: "Akrilik", desc: "Kreasi bunga akrilik awet tahan lama yang indah dipajang di ruang tamu.", price: 145000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400&q=80" },
+            { id: 11, name: "Artificial", category: "Buket Bunga", desc: "Kreasi Buket Bunga awet tahan lama yang indah untuk orang tersayang.", price: 145000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400&q=80" },
         ];
 
         let currentKategoriFilter = "Semua";
