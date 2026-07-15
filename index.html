@@ -7,24 +7,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .active-tab { border-bottom: 2px solid #db2777; color: #27AEB9; font-weight: 600; }
-        .sidebar-active { bg-emerald blue-100; color: #27AEB9; font-weight: 600; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
 
+    <!-- HEADER -->
     <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
-                <span class="text-green-600 font-bold text-xl"><a href="" class="flex items-center"><img src="Image/logoGN.png" class="h-20 w-auto object-contain" alt="Logo"></a></span>
+                <span class="text-green-600 font-bold text-xl"><a href="" class="flex items-center"><img src="Image/logoGN.png" class="h-16 w-auto object-contain" alt="Logo" onerror="this.src='https://placehold.co/150x80?text=Florist+Nusantara'"></a></span>
                 <h1 class="text-xl font-bold text-gray-900 tracking-tight">Florist Nusantara</h1>
             </div>
             <nav class="flex gap-2">
                 <button onclick="switchView('katalog')" id="btn-view-katalog" class="px-4 py-2 text-sm font-medium rounded-lg bg-pink-600 text-white shadow-sm transition">🛒 Halaman Katalog</button>
-                <button onclick="openLoginModal()" id="btn-view-admin" class="px-4 py-2 text-sm font-medium rounded-lg bg-gray-800 text-white shadow-sm transition">🔒 Super Admin</button>
+                <button onclick="openLoginModal()" id="btn-view-admin" class="px-4 py-2 text-sm font-medium rounded-lg bg-gray-800 text-white shadow-sm transition">🔒 Sistem Log In</button>
             </nav>
         </div>
     </header>
 
+    <!-- LOGIN MODAL -->
     <div id="login-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" onclick="closeLoginModal()"></div>
@@ -33,17 +34,17 @@
                 <div class="bg-white px-6 pt-6 pb-4">
                     <div class="flex flex-col items-center">
                         <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-pink-100 text-pink-600 mb-4">
-                            <span class="text-xl">🔒</span>
+                            <span class="text-xl">🔐</span>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1" id="modal-title">Login Super Admin</h3>
-                        <p class="text-xs text-gray-500 mb-6">Masukkan kredensial khusus untuk mengakses dasbor</p>
+                        <h3 class="text-lg font-bold text-gray-900 mb-1" id="modal-title">Log In Pengguna</h3>
+                        <p class="text-xs text-gray-500 mb-6">Gunakan akun Super Admin atau Staff Karyawan</p>
                         <form id="form-login" onsubmit="handleLogin(event)" class="w-full space-y-4">
                             <div id="login-error" class="hidden p-3 text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg font-medium text-center">
                                 Username atau password salah!
                             </div>
                             <div>
                                 <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Username</label>
-                                <input type="text" id="login-username" required placeholder="Masukkan username" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                                <input type="text" id="login-username" required placeholder="admin / staff" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Password</label>
@@ -60,33 +61,29 @@
         </div>
     </div>
 
+    <!-- DETAIL MODAL -->
     <div id="detail-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" role="dialog" aria-modal="true">
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-4 text-center sm:block sm:p-0">
             <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-60" onclick="closeDetailModal()"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            
             <div class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
                 <div class="absolute top-4 right-4 z-10">
                     <button onclick="closeDetailModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full p-2 focus:outline-none transition">✕</button>
                 </div>
-                
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="bg-gray-100 flex items-center justify-center p-4">
                         <img id="detail-img" src="" alt="Foto Produk" class="max-h-[400px] w-full object-contain rounded-lg shadow-sm">
                     </div>
-                    
                     <div class="p-6 flex flex-col justify-between h-[400px] overflow-y-auto">
                         <div>
                             <span id="detail-cat" class="text-[10px] font-bold text-pink-600 bg-pink-50 border border-pink-100 px-2 py-0.5 rounded-full uppercase">KATEGORI</span>
                             <h3 id="detail-name" class="text-xl font-bold text-gray-900 mt-2">Nama Rangkaian Bunga</h3>
                             <p id="detail-price" class="text-lg font-extrabold text-pink-600 mt-1">Rp 0</p>
-                            
                             <div class="mt-4 border-t pt-4">
                                 <h4 class="text-xs font-bold uppercase text-gray-400 tracking-wider">Deskripsi Produk:</h4>
                                 <p id="detail-desc" class="text-sm text-gray-600 mt-2 leading-relaxed">Ini adalah rincian deskripsi produk rangkaian bunga.</p>
                             </div>
                         </div>
-
                         <div class="border-t pt-4 bg-white sticky bottom-0">
                             <button onclick="pesanMelaluiWA()" class="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-95">
                                 Hubungi Penjual via WhatsApp
@@ -98,6 +95,7 @@
         </div>
     </div>
 
+    <!-- EDIT MODAL -->
     <div id="edit-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" role="dialog" aria-modal="true">
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" onclick="closeEditModal()"></div>
@@ -147,6 +145,7 @@
         </div>
     </div>
 
+    <!-- MAIN VIEW: KATALOG -->
     <main id="view-katalog" class="max-w-7xl mx-auto px-4 py-8">
         <div class="bg-cyan-400 rounded-2xl p-8 text-center text-white mb-8 shadow-md">
             <h2 class="text-3xl md:text-4xl font-bold mb-2">Karangan <span class="text-yellow-300">Bunga Spesial</span></h2>
@@ -155,70 +154,135 @@
 
         <div class="border-b border-gray-200 mb-8 overflow-x-auto flex gap-6 text-sm text-gray-500 whitespace-nowrap">
             <button onclick="filterKategori('Semua')" id="cat-Semua" class="pb-3 active-tab">Semua</button>
-            <button onclick="filterKategori('Ulang Tahun')" id="cat-Ulang Tahun" class="pb-3">🎂 Ulang Tahun</button>
-            <button onclick="filterKategori('Pernikahan')" id="cat-Pernikahan" class="pb-3">💍 Pernikahan</button>
+            <button onclick="filterKategori('Ulang Tahun')" id="cat-Ulang" class="pb-3">🎂 Ulang Tahun</button>
+            <button onclick="filterKategori('Pernikahan')" id="cat-Nikah" class="pb-3">💍 Pernikahan</button>
             <button onclick="filterKategori('Wisuda')" id="cat-Wisuda" class="pb-3">🎓 Wisuda</button>
-            <button onclick="filterKategori('Anniversary')" id="cat-Anniversary" class="pb-3">❤️ Anniversary</button>
-            <button onclick="filterKategori('Congratulations')" id="cat-Congratulations" class="pb-3">🎊 Congratulations</button>
-            <button onclick="filterKategori('Ucapan Duka')" id="cat-Ucapan Duka" class="pb-3">🕊️ Ucapan Duka</button>
+            <button onclick="filterKategori('Anniversary')" id="cat-Anniv" class="pb-3">❤️ Anniversary</button>
+            <button onclick="filterKategori('Congratulations')" id="cat-Congrats" class="pb-3">🎊 Congratulations</button>
+            <button onclick="filterKategori('Ucapan Duka')" id="cat-Duka" class="pb-3">🕊️ Ucapan Duka</button>
             <button onclick="filterKategori('Akrilik')" id="cat-Akrilik" class="pb-3">💎 Akrilik</button>
-            <button onclick="filterKategori('Buket Bunga')" id="cat-Buket Bunga" class="pb-3">💐 Buket Bunga</button>
+            <button onclick="filterKategori('Buket Bunga')" id="cat-Buket" class="pb-3">💐 Buket Bunga</button>
         </div>
 
         <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span>Semua Produk</span>
             <span id="product-count-badge" class="bg-gray-200 text-gray-700 text-xs px-2.5 py-0.5 rounded-full">0 tersedia</span>
         </h3>
-        <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            </div>
+        <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </main>
 
+    <!-- MAIN VIEW: ADMIN & STAFF WORKSPACE -->
     <main id="view-admin" class="max-w-7xl mx-auto px-4 py-8 hidden">
         <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- SIDEBAR BARU -->
             <aside class="w-full lg:w-64 flex flex-col gap-1.5 bg-white p-4 rounded-xl border border-gray-200 shadow-sm h-fit">
                 <div class="flex items-center gap-3 px-3 py-2 border-b border-gray-100 mb-3">
-                    <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold">SA</div>
+                    <div id="user-avatar" class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold">SA</div>
                     <div>
-                        <h4 class="text-sm font-bold text-gray-900">Super Admin</h4>
-                        <p class="text-xs text-gray-500">floristnusantara.com</p>
+                        <h4 id="user-role-label" class="text-sm font-bold text-gray-900">Super Admin</h4>
+                        <p class="text-xs text-gray-500">Aplikasi Kasir & Florist</p>
                     </div>
                 </div>
-                <p class="text-xs font-bold uppercase text-gray-400 tracking-wider px-3 mt-2 mb-1">Utama</p>
-                <button onclick="switchAdminSubTab('dashboard')" id="sub-dash" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-pink-600 bg-pink-50 font-medium text-left">📊 Dashboard</button>
+                
+                <p class="text-xs font-bold uppercase text-gray-400 tracking-wider px-3 mt-2 mb-1">Menu Utama</p>
+                <button onclick="switchAdminSubTab('dashboard')" id="sub-dash" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-pink-600 bg-pink-50 font-medium text-left">📊 Dashboard Analitik</button>
+                <button onclick="switchAdminSubTab('pesanan')" id="sub-pesanan" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left">📦 Manajemen Pesanan</button>
                 <button onclick="switchAdminSubTab('tambah')" id="sub-tambah" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left">➕ Tambah Produk</button>
-                <p class="text-xs font-bold uppercase text-gray-400 tracking-wider px-3 mt-4 mb-1">Pengaturan</p>
-                <div class="px-3 py-2 bg-gray-50 rounded-lg border border-gray-100">
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">No. WhatsApp Admin:</label>
-                    <input type="text" id="wa-number" value="62852-4994-9549" class="w-full bg-white border border-gray-200 rounded px-2 py-1 text-xs font-mono focus:outline-pink-500" onchange="renderKatalog()">
+                
+                <!-- MENU KHUSUS SUPER ADMIN (DIBATASI UNTUK KARYAWAN) -->
+                <div id="super-admin-only-menus" class="space-y-1">
+                    <p class="text-xs font-bold uppercase text-gray-400 tracking-wider px-3 mt-4 mb-1">Manajemen & Finansial</p>
+                    <button onclick="switchAdminSubTab('klien')" id="sub-klien" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left">👥 Data Klien & WA</button>
+                    <button onclick="switchAdminSubTab('keuangan')" id="sub-keuangan" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left">💰 Pantau Keuangan</button>
+                    <button onclick="switchAdminSubTab('hpp')" id="sub-hpp" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left">🧮 Kalkulator HPP & Profit</button>
                 </div>
-                <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 mt-4 text-sm rounded-lg text-red-600 hover:bg-red-50 font-medium text-left">🚪 Keluar</button>
+
+                <p class="text-xs font-bold uppercase text-gray-400 tracking-wider px-3 mt-4 mb-1">Pengaturan WA</p>
+                <div class="px-3 py-2 bg-gray-50 rounded-lg border border-gray-100">
+                    <label class="block text-[10px] font-semibold text-gray-500 mb-1">No. WhatsApp Admin:</label>
+                    <input type="text" id="wa-number" value="6285249949549" class="w-full bg-white border border-gray-200 rounded px-2 py-1 text-xs font-mono focus:outline-pink-500" onchange="renderKatalog()">
+                </div>
+                
+                <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 mt-4 text-sm rounded-lg text-red-600 hover:bg-red-50 font-medium text-left">🚪 Keluar Sistem</button>
             </aside>
 
-            <section class="flex-1">
+            <!-- CONTAINER CONTENT -->
+            <section class="flex-1 space-y-6">
+                
+                <!-- ================= TAB 1: DASHBOARD ANALITIK ================= -->
                 <div id="admin-sub-dashboard" class="space-y-6">
+                    <h3 class="text-xl font-bold text-gray-900">📊 Dashboard Analitik Utama</h3>
+                    
+                    <!-- KPI Cards (Statistik Laporan Pesanan & Keuangan) -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                            <p class="text-xs text-gray-500 font-medium uppercase">Total Produk</p>
-                            <p id="stat-total" class="text-2xl font-bold text-gray-900 mt-1">0</p>
+                            <p class="text-xs text-gray-500 font-medium uppercase">Laporan Pesanan</p>
+                            <p id="stat-total-pesanan" class="text-2xl font-bold text-blue-600 mt-1">12</p>
+                            <span class="text-[10px] text-green-600">📈 +15% Minggu ini</span>
                         </div>
                         <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                            <p class="text-xs text-gray-500 font-medium uppercase">Tersedia</p>
-                            <p id="stat-ready" class="text-2xl font-bold text-green-600 mt-1">0</p>
+                            <p class="text-xs text-gray-500 font-medium uppercase">Pendapatan Bersih</p>
+                            <p id="stat-total-keuangan" class="text-2xl font-bold text-green-600 mt-1">Rp 4.250.000</p>
+                            <span class="text-[10px] text-gray-500">Realtime Kas & Bank</span>
                         </div>
                         <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                            <p class="text-xs text-gray-500 font-medium uppercase">Stok Habis</p>
-                            <p id="stat-empty" class="text-2xl font-bold text-red-600 mt-1">0</p>
+                            <p class="text-xs text-gray-500 font-medium uppercase">Deadline Terdekat</p>
+                            <p id="stat-deadline-count" class="text-2xl font-bold text-red-600 mt-1">3 Orderan</p>
+                            <span class="text-[10px] text-red-500 font-bold">⚠️ Butuh diprioritaskan</span>
                         </div>
-                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                            <p class="text-xs text-gray-500 font-medium uppercase">Kategori</p>
-                            <p class="text-2xl font-bold text-blue-600 mt-1">7</p>
+                        <div id="karyawan-productivity-card" class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                            <p class="text-xs text-gray-500 font-medium uppercase">Kinerja Karyawan</p>
+                            <div class="mt-2 text-xs space-y-1">
+                                <p>🤵 **Rian**: <span class="text-green-600">6 Selesai</span></p>
+                                <p>👩 **Siti**: <span class="text-green-600">4 Selesai</span></p>
+                            </div>
                         </div>
                     </div>
 
+                    <!-- Bestseller & Highlight Analitik -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Kategori Bestseller -->
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                            <h4 class="font-bold text-gray-900 text-sm mb-4">🏆 Kategori Bestseller & Peminat</h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="font-semibold">🎂 Kategori Ulang Tahun</span>
+                                        <span>42% Pemesanan</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 h-2 rounded-full"><div class="bg-pink-500 h-2 rounded-full" style="width: 42%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="font-semibold">💐 Buket Bunga</span>
+                                        <span>30% Pemesanan</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 h-2 rounded-full"><div class="bg-blue-500 h-2 rounded-full" style="width: 30%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="font-semibold">💍 Pernikahan</span>
+                                        <span>18% Pemesanan</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 h-2 rounded-full"><div class="bg-purple-500 h-2 rounded-full" style="width: 18%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel Deadline Orderan Prioritas -->
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                            <h4 class="font-bold text-gray-900 text-sm mb-4 text-red-600">🚨 Deadline Orderan Mendesak</h4>
+                            <div id="deadline-list-dashboard" class="space-y-3 text-xs">
+                                <!-- Terisi otomatis melalui JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master Tabel Produk default bawaan -->
                     <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
                         <div class="px-5 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-                            <h4 class="font-bold text-gray-900 text-sm">Daftar Produk & Kontrol</h4>
-                            <span class="text-xs text-gray-500">Gunakan kontrol di bawah untuk memanajemen produk</span>
+                            <h4 class="font-bold text-gray-900 text-sm">Daftar Produk & Kontrol Stok</h4>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-sm border-collapse">
@@ -231,13 +295,69 @@
                                         <th class="p-4 text-center">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody id="admin-table-body" class="divide-y divide-gray-100">
-                                    </tbody>
+                                <tbody id="admin-table-body" class="divide-y divide-gray-100"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
+                <!-- ================= TAB 2: MANAJEMEN PESANAN ================= -->
+                <div id="admin-sub-pesanan" class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 hidden space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-lg font-bold text-gray-900">📋 Manajemen Pesanan & Status Kalender</h4>
+                        <button onclick="tambahPesananManual()" class="px-3 py-1.5 text-xs bg-pink-600 text-white rounded-lg hover:bg-pink-700 font-medium">➕ Input Pesanan Baru</button>
+                    </div>
+
+                    <!-- Notifikasi Deadline Mendesak -->
+                    <div class="p-4 bg-orange-50 border border-orange-200 rounded-xl text-xs text-orange-800 flex items-center gap-2">
+                        <span>🔔</span>
+                        <span><strong>Notifikasi Deadline:</strong> Ada <strong class="text-red-600">3 pesanan</strong> yang mendekati batas waktu pengerjaan hari ini! Segera perbarui status.</span>
+                    </div>
+
+                    <!-- Kalender Kegiatan Sederhana (Agenda Pengerjaan) -->
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <h5 class="text-xs font-bold uppercase text-gray-500 mb-3">📅 Kalender Rencana Kirim (Juli 2026)</h5>
+                        <div class="grid grid-cols-7 gap-1 text-center text-xs font-medium">
+                            <div class="bg-white p-2 rounded border font-bold text-red-500">Min</div>
+                            <div class="bg-white p-2 rounded border font-bold">Sen</div>
+                            <div class="bg-white p-2 rounded border font-bold">Sel</div>
+                            <div class="bg-white p-2 rounded border font-bold">Rab</div>
+                            <div class="bg-white p-2 rounded border font-bold">Kam</div>
+                            <div class="bg-white p-2 rounded border font-bold">Jum</div>
+                            <div class="bg-white p-2 rounded border font-bold">Sab</div>
+                            <!-- Tanggal dummy -->
+                            <div class="p-2 text-gray-400">12</div>
+                            <div class="p-2 text-gray-400">13</div>
+                            <div class="p-2 text-gray-400">14</div>
+                            <div class="bg-pink-100 p-2 rounded border font-bold relative text-pink-700">15 <span class="absolute bottom-1 right-1 w-2 h-2 bg-pink-600 rounded-full"></span></div>
+                            <div class="bg-blue-100 p-2 rounded border font-bold relative text-blue-700">16 <span class="absolute bottom-1 right-1 w-2 h-2 bg-blue-600 rounded-full"></span></div>
+                            <div class="bg-yellow-100 p-2 rounded border font-bold relative text-yellow-700">17 <span class="absolute bottom-1 right-1 w-2 h-2 bg-yellow-600 rounded-full"></span></div>
+                            <div class="p-2">18</div>
+                        </div>
+                        <p class="text-[10px] text-gray-500 mt-2">*Warna background menunjukkan adanya pesanan aktif terjadwal.</p>
+                    </div>
+
+                    <!-- List Pesanan Terpantau -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead class="bg-gray-100 text-gray-600 uppercase font-bold">
+                                <tr>
+                                    <th class="p-3">ID / Pemesan</th>
+                                    <th class="p-3">Produk / Layanan</th>
+                                    <th class="p-3">Deadline</th>
+                                    <th class="p-3">Status Pengerjaan</th>
+                                    <th class="p-3">Penanggung Jawab</th>
+                                    <th class="p-3">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pesanan-table-body" class="divide-y divide-gray-100">
+                                <!-- Diisi otomatis via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ================= TAB 3: TAMBAH PRODUK ================= -->
                 <div id="admin-sub-tambah" class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 hidden">
                     <h4 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Upload / Tambah Produk Baru</h4>
                     <form id="form-add-product" onsubmit="simpanProdukBaru(event)" class="space-y-4">
@@ -280,12 +400,158 @@
                         </div>
                     </form>
                 </div>
+
+                <!-- ================= TAB 4: DATA KLIEN (SUPER ADMIN ONLY) ================= -->
+                <div id="admin-sub-klien" class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 hidden space-y-6">
+                    <h4 class="text-lg font-bold text-gray-900">👥 Data Manajemen Klien Florist</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                            <p class="text-xs text-blue-700 font-bold uppercase">Klien Baru Bulan Ini</p>
+                            <p class="text-2xl font-black text-blue-900 mt-1">14 Member</p>
+                        </div>
+                        <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
+                            <p class="text-xs text-yellow-700 font-bold uppercase">Langganan Aktif</p>
+                            <p class="text-2xl font-black text-yellow-900 mt-1">38 Akun</p>
+                        </div>
+                        <div class="p-4 bg-purple-50 border border-purple-200 rounded-xl">
+                            <p class="text-xs text-purple-700 font-bold uppercase">VIP Member Tier</p>
+                            <p class="text-2xl font-black text-purple-900 mt-1">8 Prioritas</p>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead class="bg-gray-100 text-gray-600 uppercase font-bold">
+                                <tr>
+                                    <th class="p-3">Nama Klien</th>
+                                    <th class="p-3">Kategori</th>
+                                    <th class="p-3">No. WA</th>
+                                    <th class="p-3">Riwayat Pesanan Terakhir</th>
+                                    <th class="p-3">Hubungi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="klien-table-body" class="divide-y divide-gray-100">
+                                <!-- Diisi otomatis via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ================= TAB 5: KEUANGAN (SUPER ADMIN ONLY) ================= -->
+                <div id="admin-sub-keuangan" class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 hidden space-y-6">
+                    <h4 class="text-lg font-bold text-gray-900">💰 Pantau Keuangan & Aliran Duit Bisnis</h4>
+                    
+                    <!-- Fitur Kantong Pembagian Kas -->
+                    <div>
+                        <h5 class="text-xs font-bold uppercase text-gray-500 mb-3">📁 Fitur Kantong (Alokasi Kas Aman)</h5>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
+                                <span class="text-xs font-semibold text-emerald-800">💼 Kantong Utama (Operasional)</span>
+                                <p class="text-lg font-bold text-emerald-950 mt-1">Rp 12.850.000</p>
+                            </div>
+                            <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl">
+                                <span class="text-xs font-semibold text-blue-800">💰 Kantong Profit Bersih (Gaji Owner)</span>
+                                <p class="text-lg font-bold text-blue-950 mt-1">Rp 6.400.000</p>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 p-4 rounded-xl">
+                                <span class="text-xs font-semibold text-red-800">📦 Kantong Belanja Bahan Baku</span>
+                                <p class="text-lg font-bold text-red-950 mt-1">Rp 3.500.000</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tracking Pengeluaran & Anti Bocor -->
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h5 class="text-xs font-bold text-gray-700 uppercase">📊 Tracking Biaya Pengeluaran Terbaru (Pastiin Tidak Bocor)</h5>
+                            <button onclick="tambahPengeluaran()" class="px-2 py-1 text-[10px] bg-red-600 text-white rounded font-medium">📝 Catat Biaya Baru</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs bg-white rounded border border-gray-200">
+                                <thead class="bg-gray-100 font-bold">
+                                    <tr>
+                                        <th class="p-2">Keterangan Pengeluaran</th>
+                                        <th class="p-2">Kantong Sumber</th>
+                                        <th class="p-2 text-right">Jumlah</th>
+                                        <th class="p-2">Status Nota</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="keuangan-expense-table" class="divide-y divide-gray-100">
+                                    <tr>
+                                        <td class="p-2">Beli Pita Satin & Kertas Wrapping</td>
+                                        <td class="p-2">Belanja Bahan</td>
+                                        <td class="p-2 text-right text-red-600">-Rp 450.000</td>
+                                        <td class="p-2"><span class="bg-green-100 text-green-700 text-[10px] px-1.5 py-0.5 rounded font-bold">Terverifikasi</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2">Uang Transport Delivery Wisuda</td>
+                                        <td class="p-2">Kas Operasional</td>
+                                        <td class="p-2 text-right text-red-600">-Rp 120.000</td>
+                                        <td class="p-2"><span class="bg-green-100 text-green-700 text-[10px] px-1.5 py-0.5 rounded font-bold">Terverifikasi</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= TAB 6: KALKULATOR HPP & PRICING (SUPER ADMIN ONLY) ================= -->
+                <div id="admin-sub-hpp" class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 hidden space-y-6">
+                    <h4 class="text-lg font-bold text-gray-900">🧮 Kalkulator HPP & Simulasi Harga Jual Anti Pusing</h4>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Input Komponen Biaya -->
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                            <h5 class="text-xs font-bold uppercase text-gray-700 border-b pb-1">⚙️ Input Komponen Biaya</h5>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-gray-600 mb-1">Bunga Segar / Bahan Utama (Rp)</label>
+                                    <input type="number" id="hpp-bahan" value="50000" oninput="hitungHppUlang()" class="w-full border p-2 rounded text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-gray-600 mb-1">Wrapping, Pita, & Kartu Ucapan (Rp)</label>
+                                    <input type="number" id="hpp-wrapping" value="15000" oninput="hitungHppUlang()" class="w-full border p-2 rounded text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-gray-600 mb-1">Jasa Rangkai / Tenaga Kerja (Rp)</label>
+                                    <input type="number" id="hpp-tenaga" value="20000" oninput="hitungHppUlang()" class="w-full border p-2 rounded text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-gray-600 mb-1">Biaya Operasional / Listrik / Sewa (Rp)</label>
+                                    <input type="number" id="hpp-ops" value="5000" oninput="hitungHppUlang()" class="w-full border p-2 rounded text-xs">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Perhitungan & Simpan HPP -->
+                        <div class="bg-pink-50 p-4 rounded-xl border border-pink-200 flex flex-col justify-between">
+                            <div>
+                                <h5 class="text-xs font-bold uppercase text-pink-700 border-b border-pink-200 pb-1 mb-2">💰 Rumus & Hasil Pricing</h5>
+                                <div class="space-y-1 text-xs">
+                                    <p>Total HPP Dasar Produk: <span class="font-bold text-gray-800" id="res-total-hpp">Rp 90.000</span></p>
+                                    <div class="mt-4">
+                                        <label class="block text-[11px] font-bold text-gray-700 mb-1">🔥 Target Margin Profit (%)</label>
+                                        <input type="number" id="target-margin" value="50" oninput="hitungHppUlang()" class="border p-1.5 rounded text-xs w-24"> %
+                                    </div>
+                                    <div class="mt-4 p-3 bg-white rounded border border-pink-100">
+                                        <p class="text-[10px] text-gray-500 uppercase font-semibold">Harga Jual Ideal (Anti Pusing):</p>
+                                        <p class="text-xl font-black text-pink-600" id="res-harga-jual">Rp 180.000</p>
+                                        <p class="text-[10px] text-green-600 font-medium">Perkiraan Profit Bersih: <span id="res-nominal-profit">Rp 90.000</span> / Produk</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="simpanHargaHpp()" class="mt-4 w-full py-2 bg-pink-600 text-white rounded text-xs font-bold hover:bg-pink-700 transition">💾 Simpan Harga HPP Produk</button>
+                        </div>
+                    </div>
+                </div>
+
             </section>
         </div>
     </main>
 
     <script>
         let isLoggedIn = false;
+        let currentUserRole = "admin"; // default "admin" atau "staff"
         let produkAktifModal = null; 
 
         let databaseProduk = [
@@ -293,13 +559,24 @@
             { id: 2, name: "Bunga Matahari Keceriaan", category: "Ulang Tahun", desc: "Sumber semangat dan kebahagiaan, sangat cocok dihadiahkan kepada teman dekat.", price: 120000, status: "tersedia", image: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=400&q=80" },
             { id: 3, name: "Lily Putih Elegan", category: "Pernikahan", desc: "Keanggunan berkelas untuk momen dekorasi dan pesta pernikahan sakral.", price: 225000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400&q=80" },
             { id: 4, name: "Buket Wisuda Colorful", category: "Wisuda", desc: "Rayakan pencapaian kelulusan dengan bunga warna-warni ceria lengkap dengan pita.", price: 165000, status: "tersedia", image: "https://images.unsplash.com/photo-1533616688419-b7a585564566?w=400&q=80" },
-            { id: 5, name: "Gerbera Pelangi Congratulations", category: "Congratulations", desc: "Rayakan keberhasilan grand opening toko atau bisnis baru dengan papan gerbera ceria.", price: 175000, status: "tersedia", image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" },
-            { id: 6, name: "Mawar Emas Grand Opening", category: "Congratulations", desc: "Untuk momen selebrasi pencapaian korporasi besar nan megah.", price: 280000, status: "tersedia", image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" },
-            { id: 7, name: "Rangkaian Duka Chrysant Putih", category: "Ucapan Duka", desc: "Tanda belasungkawa mendalam yang tulus dan menenangkan pihak keluarga.", price: 195000, status: "tersedia", image: "https://images.unsplash.com/photo-1550950158-d0d960dff51b?w=400&q=80" },
-            { id: 8, name: "Mini Bouquet Manis", category: "Ulang Tahun", desc: "Hadiah kegutan berukuran kecil namun penuh arti yang mendalam.", price: 95000, status: "tersedia", image: "https://images.unsplash.com/photo-1562447435-08e988358bea?w=400&q=80" },
-            { id: 9, name: "Akasia & Lavender Rustic", category: "Ucapan Duka", desc: "Kombinasi nuansa alam pedesaan yang menenangkan dan damai.", price: 145000, status: "habis", image: "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=400&q=80" },
             { id: 10, name: "Akasia", category: "Akrilik", desc: "Kreasi bunga akrilik awet tahan lama yang indah dipajang di ruang tamu.", price: 145000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400&q=80" },
             { id: 11, name: "Artificial", category: "Buket Bunga", desc: "Kreasi Buket Bunga awet tahan lama yang indah untuk orang tersayang.", price: 145000, status: "tersedia", image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400&q=80" },
+        ];
+
+        // Database Pesanan Terpantau & Deadline
+        let databasePesanan = [
+            { id: "FL-001", client: "Hendra Wahyudi", product: "Buket Mawar Merah Premium", deadline: "Hari ini, 17:00", status: "Sedang Dirangkai", staff: "Rian" },
+            { id: "FL-002", client: "Santi Rahayu", product: "Lily Putih Elegan", deadline: "Besok, 09:00", status: "Antrean", staff: "Siti" },
+            { id: "FL-003", client: "Dian Pratama", product: "Buket Wisuda Colorful", deadline: "17 Juli 2026", status: "Selesai", staff: "Rian" },
+            { id: "FL-004", client: "Anita Wijaya", product: "Akasia Akrilik", deadline: "Hari ini, 19:30", status: "Antrean", staff: "Siti" },
+        ];
+
+        // Database Klien & CRM WhatsApp
+        let databaseKlien = [
+            { id: 1, name: "Hendra Wahyudi", category: "VIP Member", phone: "628123456789", lastOrder: "Buket Mawar Merah Premium" },
+            { id: 2, name: "Santi Rahayu", category: "Langganan", phone: "628776543210", lastOrder: "Lily Putih Elegan" },
+            { id: 3, name: "Dian Pratama", category: "Klien Baru", phone: "62899888777", lastOrder: "Buket Wisuda Colorful" },
+            { id: 4, name: "Andi Wijaya", category: "VIP Member", phone: "628520000111", lastOrder: "Artificial Buket Bunga" },
         ];
 
         let currentKategoriFilter = "Semua";
@@ -326,9 +603,18 @@
 
             if (userIn === "admin" && passIn === "admin") {
                 isLoggedIn = true;
+                currentUserRole = "admin";
                 errorDiv.classList.add('hidden');
                 closeLoginModal();
                 switchView('admin');
+                alert("Selamat datang, Super Admin!");
+            } else if (userIn === "staff" && passIn === "staff") {
+                isLoggedIn = true;
+                currentUserRole = "staff";
+                errorDiv.classList.add('hidden');
+                closeLoginModal();
+                switchView('admin');
+                alert("Selamat datang di panel khusus staff!");
             } else {
                 errorDiv.classList.remove('hidden');
             }
@@ -361,25 +647,48 @@
         }
 
         function switchAdminSubTab(sub) {
+            // Sembunyikan semua sub tab terlebih dahulu
             document.getElementById('admin-sub-dashboard').classList.add('hidden');
+            document.getElementById('admin-sub-pesanan').classList.add('hidden');
             document.getElementById('admin-sub-tambah').classList.add('hidden');
-            document.getElementById('sub-dash').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left";
-            document.getElementById('sub-tambah').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left";
+            document.getElementById('admin-sub-klien').classList.add('hidden');
+            document.getElementById('admin-sub-keuangan').classList.add('hidden');
+            document.getElementById('admin-sub-hpp').classList.add('hidden');
+            
+            // Reset visual button active
+            const btns = ["sub-dash", "sub-pesanan", "sub-tambah", "sub-klien", "sub-keuangan", "sub-hpp"];
+            btns.forEach(btnId => {
+                const el = document.getElementById(btnId);
+                if(el) {
+                    el.className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-gray-600 hover:bg-gray-50 font-medium text-left";
+                }
+            });
 
-            if(sub === 'dashboard') {
-                document.getElementById('admin-sub-dashboard').classList.remove('hidden');
-                document.getElementById('sub-dash').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-pink-600 bg-pink-50 font-medium text-left";
-            } else {
-                document.getElementById('admin-sub-tambah').classList.remove('hidden');
-                document.getElementById('sub-tambah').className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-pink-600 bg-pink-50 font-medium text-left";
-            }
+            // Aktifkan tab yang dipilih
+            const mapping = {
+                'dashboard': 'admin-sub-dashboard',
+                'pesanan': 'admin-sub-pesanan',
+                'tambah': 'admin-sub-tambah',
+                'klien': 'admin-sub-klien',
+                'keuangan': 'admin-sub-keuangan',
+                'hpp': 'admin-sub-hpp'
+            };
+            
+            document.getElementById(mapping[sub]).classList.remove('hidden');
+            document.getElementById(`sub-${sub}`).className = "w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg text-pink-600 bg-pink-50 font-medium text-left";
         }
 
         function filterKategori(kat) {
             currentKategoriFilter = kat;
             const buttons = document.querySelectorAll('[id^="cat-"]');
             buttons.forEach(b => b.classList.remove('active-tab'));
-            document.getElementById(`cat-${kat}`).classList.add('active-tab');
+            
+            const mapId = {
+                'Semua': 'cat-Semua', 'Ulang Tahun': 'cat-Ulang', 'Pernikahan': 'cat-Nikah',
+                'Wisuda': 'cat-Wisuda', 'Anniversary': 'cat-Anniv', 'Congratulations': 'cat-Congrats',
+                'Ucapan Duka': 'cat-Duka', 'Akrilik': 'cat-Akrilik', 'Buket Bunga': 'cat-Buket'
+            };
+            document.getElementById(mapId[kat]).classList.add('active-tab');
             renderKatalog();
         }
 
@@ -419,7 +728,7 @@
                             ${isHabis ? 
                                 `<button disabled class="w-full text-center bg-gray-200 text-gray-400 text-xs font-semibold py-2.5 px-4 rounded-xl cursor-not-allowed">🚫 Stok Habis</button>` : 
                                 `<a href="${waLink}" target="_blank" class="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-95">
-                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.966 0c3.178.001 6.169 1.24 8.419 3.496 2.25 2.256 3.489 5.252 3.488 8.434-.004 6.617-5.34 11.964-11.912 11.964-2.006-.001-3.973-.506-5.722-1.47l-6.182 1.622zm6.275-3.666c1.652.98 3.267 1.492 4.981 1.493 5.432 0 9.851-4.42 9.854-9.857.002-2.634-1.022-5.111-2.883-6.974-1.86-1.862-4.341-2.885-6.983-2.886-5.439 0-9.858 4.422-9.862 9.86-.001 1.815.5 3.535 1.451 5.048L1.932 22.09l4.4-1.156zm12.18-5.313c-.33-.165-1.951-.963-2.251-1.073-.3-.109-.518-.165-.736.165-.218.329-.842 1.073-1.032 1.292-.19.218-.379.245-.71.081-.33-.165-1.393-.513-2.656-1.64-1.025-.915-1.717-2.046-1.919-2.376-.202-.33-.022-.507.143-.671.148-.147.33-.384.495-.577.165-.192.22-.32.33-.534.11-.213.055-.4-.028-.565-.083-.165-.736-1.774-1.009-2.434-.266-.64-.538-.553-.736-.563-.19-.01-.408-.012-.626-.012-.218 0-.573.082-.872.411-.3.33-1.145 1.118-1.145 2.727s1.171 3.161 1.334 3.38c.163.22 2.304 3.516 5.582 4.934.78.337 1.389.538 1.864.689.783.249 1.497.214 2.061.13.629-.094 1.951-.797 2.224-1.529.273-.733.273-1.359.19-1.488-.083-.13-.304-.213-.634-.378z"/></svg>Pesan via WA
+                                    Pesan via WA
                                 </a>`
                             }
                         </div>
@@ -455,7 +764,6 @@
             window.open(`https://wa.me/${waNumber}?text=${textMessage}`, '_blank');
         }
 
-        // ====== FUNGSI MODAL EDIT ======
         function openEditModal(id) {
             const p = databaseProduk.find(prod => prod.id === id);
             if (!p) return;
@@ -465,7 +773,7 @@
             document.getElementById('edit-in-category').value = p.category;
             document.getElementById('edit-in-price').value = p.price;
             document.getElementById('edit-in-desc').value = p.desc;
-            document.getElementById('edit-in-image-file').value = ""; // reset file input
+            document.getElementById('edit-in-image-file').value = "";
 
             document.getElementById('edit-modal').classList.remove('hidden');
         }
@@ -489,33 +797,164 @@
             if (!p) return;
 
             if (file) {
-                // Jika user mengunggah foto baru
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    p.name = name;
-                    p.category = category;
-                    p.price = price;
-                    p.desc = desc;
-                    p.image = event.target.result;
-
-                    closeEditModal();
-                    renderAplikasi();
-                    alert("Produk berhasil diperbarui!");
+                    p.name = name; p.category = category; p.price = price; p.desc = desc; p.image = event.target.result;
+                    closeEditModal(); renderAplikasi(); alert("Produk berhasil diperbarui!");
                 };
                 reader.readAsDataURL(file);
             } else {
-                // Jika user tidak mengganti foto
-                p.name = name;
-                p.category = category;
-                p.price = price;
-                p.desc = desc;
-
-                closeEditModal();
-                renderAplikasi();
-                alert("Produk berhasil diperbarui!");
+                p.name = name; p.category = category; p.price = price; p.desc = desc;
+                closeEditModal(); renderAplikasi(); alert("Produk berhasil diperbarui!");
             }
         }
 
+        // ====== FUNGSI BARU UNTUK DASHBOARD & MANAJEMEN PESANAN ======
+        function renderPesanan() {
+            const tbody = document.getElementById('pesanan-table-body');
+            tbody.innerHTML = "";
+
+            const deadlineContainer = document.getElementById('deadline-list-dashboard');
+            deadlineContainer.innerHTML = "";
+
+            databasePesanan.forEach(item => {
+                // Render List Table
+                const tr = `
+                    <tr>
+                        <td class="p-3 font-bold">${item.id}<br><span class="text-gray-500 font-normal">${item.client}</span></td>
+                        <td class="p-3">${item.product}</td>
+                        <td class="p-3 text-red-600 font-semibold">${item.deadline}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-1 rounded text-[10px] font-bold ${item.status === 'Selesai' ? 'bg-green-100 text-green-700' : (item.status === 'Sedang Dirangkai' ? 'bg-blue-100 text-blue-700' : 'bg-yellow-100 text-yellow-700')}">
+                                ${item.status}
+                            </span>
+                        </td>
+                        <td class="p-3 font-medium text-gray-700">🤵 ${item.staff}</td>
+                        <td class="p-3">
+                            <select onchange="updateStatusPesanan('${item.id}', this.value)" class="border rounded p-1 text-[11px] bg-white">
+                                <option value="Antrean" ${item.status === 'Antrean' ? 'selected' : ''}>Antrean</option>
+                                <option value="Sedang Dirangkai" ${item.status === 'Sedang Dirangkai' ? 'selected' : ''}>Pengerjaan</option>
+                                <option value="Selesai" ${item.status === 'Selesai' ? 'selected' : ''}>Selesai</option>
+                            </select>
+                        </td>
+                    </tr>`;
+                tbody.insertAdjacentHTML('beforeend', tr);
+
+                // Render Urgent Deadline panel
+                if(item.status !== "Selesai") {
+                    const cardDl = `
+                        <div class="flex justify-between items-center bg-red-50 p-2.5 rounded border border-red-100">
+                            <div>
+                                <p class="font-bold text-gray-900">${item.client} - ${item.product}</p>
+                                <p class="text-[10px] text-gray-500">PJ: 🤵 ${item.staff}</p>
+                            </div>
+                            <span class="text-red-600 font-bold text-[10px] bg-white px-2 py-0.5 rounded shadow-sm">⏳ ${item.deadline}</span>
+                        </div>`;
+                    deadlineContainer.insertAdjacentHTML('beforeend', cardDl);
+                }
+            });
+        }
+
+        function updateStatusPesanan(id, statusBaru) {
+            let order = databasePesanan.find(o => o.id === id);
+            if(order) {
+                order.status = statusBaru;
+                renderPesanan();
+                alert(`Status pesanan ${id} berhasil diperbarui ke ${statusBaru}`);
+            }
+        }
+
+        function tambahPesananManual() {
+            const clientName = prompt("Nama Klien:");
+            if(!clientName) return;
+            const productName = prompt("Produk Pesanan (Contoh: Buket Mawar Merah Premium):");
+            const staffName = prompt("Nama Staff Penanggung Jawab:");
+            const idBaru = "FL-00" + (databasePesanan.length + 1);
+
+            databasePesanan.push({
+                id: idBaru,
+                client: clientName,
+                product: productName,
+                deadline: "Besok, 12:00",
+                status: "Antrean",
+                staff: staffName || "Staff"
+            });
+            renderPesanan();
+        }
+
+        // ====== FUNGSI BARU UNTUK MANAJEMEN KLIEN (SUPER ADMIN ONLY) ======
+        function renderKlien() {
+            const tbody = document.getElementById('klien-table-body');
+            tbody.innerHTML = "";
+
+            databaseKlien.forEach(k => {
+                const tr = `
+                    <tr>
+                        <td class="p-3 font-bold text-gray-800">${k.name}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${k.category === 'VIP Member' ? 'bg-purple-100 text-purple-700' : (k.category === 'Langganan' ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700')}">
+                                ${k.category}
+                            </span>
+                        </td>
+                        <td class="p-3 font-mono">${k.phone}</td>
+                        <td class="p-3 text-gray-600 italic">🛍️ ${k.lastOrder}</td>
+                        <td class="p-3">
+                            <a href="https://wa.me/${k.phone}?text=Halo%20${encodeURIComponent(k.name)},%20ada%20yang%20bisa%20kami%20bantu%20dari%20Florist%20Nusantara?" target="_blank" class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-bold rounded-lg hover:bg-emerald-200 text-[10px]">
+                                📲 Hubungi WA
+                            </a>
+                        </td>
+                    </tr>`;
+                tbody.insertAdjacentHTML('beforeend', tr);
+            });
+        }
+
+        // ====== FUNGSI BARU UNTUK KALKULATOR HPP & PRICING ======
+        function hitungHppUlang() {
+            const bahan = parseInt(document.getElementById('hpp-bahan').value) || 0;
+            const wrapping = parseInt(document.getElementById('hpp-wrapping').value) || 0;
+            const tenaga = parseInt(document.getElementById('hpp-tenaga').value) || 0;
+            const ops = parseInt(document.getElementById('hpp-ops').value) || 0;
+            const targetMargin = parseInt(document.getElementById('target-margin').value) || 0;
+
+            const hppDasar = bahan + wrapping + tenaga + ops;
+            document.getElementById('res-total-hpp').innerText = formatRupiah(hppDasar);
+
+            // Rumus pricing berbasis Margin Profit
+            // Harga Jual = HPP / (1 - (Margin / 100))
+            let hargaJual = hppDasar;
+            if(targetMargin < 100) {
+                hargaJual = hppDasar / (1 - (targetMargin / 100));
+            }
+            
+            const profit = hargaJual - hppDasar;
+
+            document.getElementById('res-harga-jual').innerText = formatRupiah(Math.round(hargaJual));
+            document.getElementById('res-nominal-profit').innerText = formatRupiah(Math.round(profit));
+        }
+
+        function simpanHargaHpp() {
+            const hargaJualIdeal = document.getElementById('res-harga-jual').innerText;
+            alert(`Harga HPP Produk berhasil disave! Target harga jual disarankan: ${hargaJualIdeal}`);
+        }
+
+        function tambahPengeluaran() {
+            const desc = prompt("Masukan Keterangan Pengeluaran:");
+            if(!desc) return;
+            const jml = parseInt(prompt("Jumlah Pengeluaran (Rp):")) || 0;
+
+            const tbody = document.getElementById('keuangan-expense-table');
+            const tr = `
+                <tr>
+                    <td class="p-2">${desc}</td>
+                    <td class="p-2">Kas Operasional</td>
+                    <td class="p-2 text-right text-red-600">-${formatRupiah(jml)}</td>
+                    <td class="p-2"><span class="bg-gray-100 text-gray-700 text-[10px] px-1.5 py-0.5 rounded font-bold">Terverifikasi</span></td>
+                </tr>`;
+            tbody.insertAdjacentHTML('afterbegin', tr);
+            alert("Biaya Pengeluaran Berhasil Dicatat! (Anti Bocor Sistem Aktif)");
+        }
+
+        // ====== CORE RENDERING UTAMA ======
         function renderAdmin() {
             const tbody = document.getElementById('admin-table-body');
             if(!tbody) return;
@@ -525,15 +964,14 @@
             let ready = databaseProduk.filter(p => p.status === 'tersedia').length;
             let empty = total - ready;
 
-            document.getElementById('stat-total').innerText = total;
-            document.getElementById('stat-ready').innerText = ready;
-            document.getElementById('stat-empty').innerText = empty;
+            // Set data default statis Dashboard
+            document.getElementById('stat-total-pesanan').innerText = databasePesanan.length;
 
             databaseProduk.forEach(p => {
                 const tr = `
                     <tr>
                         <td class="p-4 flex items-center gap-3">
-                            <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg">
+                            <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg" onerror="this.src='https://placehold.co/100x100?text=Bunga'">
                             <div>
                                 <p class="font-bold text-gray-900 text-xs">${p.name}</p>
                                 <p class="text-[10px] text-gray-400 line-clamp-1 max-w-xs">${p.desc}</p>
@@ -554,6 +992,26 @@
                     </tr>`;
                 tbody.insertAdjacentHTML('beforeend', tr);
             });
+
+            // TERAPKAN FILTER ROLE UNTUK KARYAWAN (PEMBATASAN SIMPLE MENU)
+            if(currentUserRole === "staff") {
+                // Ganti UI Keterangan Role di Sidebar
+                document.getElementById('user-avatar').className = "w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold";
+                document.getElementById('user-avatar').innerText = "ST";
+                document.getElementById('user-role-label').innerText = "Staff Karyawan";
+                
+                // Sembunyikan Navigasi Keuangan, Klien, HPP
+                document.getElementById('super-admin-only-menus').classList.add('hidden');
+                document.getElementById('karyawan-productivity-card').classList.add('hidden');
+            } else {
+                // Tampilkan Menu Super Admin kembali jika login sebagai admin
+                document.getElementById('user-avatar').className = "w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold";
+                document.getElementById('user-avatar').innerText = "SA";
+                document.getElementById('user-role-label').innerText = "Super Admin";
+                
+                document.getElementById('super-admin-only-menus').classList.remove('hidden');
+                document.getElementById('karyawan-productivity-card').classList.remove('hidden');
+            }
         }
 
         function toggleStatus(id) {
@@ -600,6 +1058,9 @@
         function renderAplikasi() {
             renderKatalog();
             renderAdmin();
+            renderPesanan();
+            renderKlien();
+            hitungHppUlang();
         }
 
         window.onload = function() {
